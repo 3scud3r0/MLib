@@ -271,7 +271,7 @@ class RationalFunction:
 
     Redução por MDC implementada no caso univariado. Em dimensão >1 a
     representação não é canônica; igualdade é decidida por multiplicação cruzada.
-    O domínio de avaliação exclui o conjunto de zeros do denominador ORIGINAL.
+    O domínio de avaliação exclui os zeros do denominador NORMALIZADO; fatores cancelados não preservam restrições do representante original.
     """
     numerator: Polynomial
     denominator: Polynomial

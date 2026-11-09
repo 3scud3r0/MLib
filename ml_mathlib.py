@@ -1,16 +1,17 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""ML-MATHLIB 0.1 — núcleo matemático executável, sem dependências externas.
+"""ML-MATHLIB 0.2 — núcleo matemático executável, sem dependências externas.
 
 Hierarquia e contratos:
   [0] ℚ-espaços vetoriais, produtos internos, dualidade e operadores lineares.
-  [1] Atlas afim, fibrados tangente/cotangente, álgebras de Lie e simplética.
+  [1] Atlas reais afins com dados racionais, fibrados, Lie e simplética.
   [2] Probabilidade finita, entropia, KL e métrica de Fisher-Rao.
   [3] Campos hamiltonianos e Euler simplético com certificação polinomial.
   [4] Roteamento de máxima entropia e representação de rotações SO(2).
   [5] Noether e descoberta algébrica de primeiros integrais.
 
-A aritmética algébrica é EXATA (frações de inteiros). Logaritmos,
+A aritmética algébrica é EXATA (frações de inteiros). As identidades
+racionais polinomiais são válidas também na extensão real. Logaritmos,
 trigonometria e softmax são APROXIMADOS (float da biblioteca padrão).
 
 Alcance: variedades afins e hamiltonianos POLINOMIAIS em dimensão finita.
@@ -188,25 +189,30 @@ class Matrix:
         return Matrix(tuple(tuple(row[n:]) for row in a))
 
     def determinant(self) -> Fraction:
+        """Bareiss: determinante exato com eliminação sem frações intermediárias."""
         n, m = self.shape
         if n != m:
             raise ValueError("Determinante exige matriz quadrada")
-        a = [list(row) for row in self.rows]
-        determinant = Fraction(1)
-        for j in range(n):
-            pivot = next((i for i in range(j, n) if a[i][j] != 0), None)
+        factors = [math.lcm(*(v.denominator for v in row)) for row in self.rows]
+        a = [[int(v * k) for v in row] for row, k in zip(self.rows, factors)]
+        old, sign = 1, 1
+        for j in range(n - 1):
+            pivot = next((i for i in range(j, n) if a[i][j]), None)
             if pivot is None:
                 return Fraction(0)
             if pivot != j:
                 a[j], a[pivot] = a[pivot], a[j]
-                determinant = -determinant
+                sign = -sign
             p = a[j][j]
-            determinant *= p
             for i in range(j + 1, n):
-                c = a[i][j] / p
-                for t in range(j + 1, n):
-                    a[i][t] -= c * a[j][t]
-        return determinant
+                for k in range(j + 1, n):
+                    v = p * a[i][k] - a[i][j] * a[j][k]
+                    if v % old:
+                        raise ArithmeticError("Divisão de Bareiss inexata")
+                    a[i][k] = v // old
+                a[i][j] = 0
+            old = p
+        return Fraction(sign * a[-1][-1], math.prod(factors))
 
 
 @dataclass(frozen=True)
@@ -220,12 +226,17 @@ class InnerProductSpace:
         d = self.vector_space.dimension
         if self.gram.shape != (d, d) or self.gram != self.gram.transpose():
             raise ValueError("Matriz de Gram precisa ser simétrica e d × d")
-        # Critério de Sylvester (válido sobre os racionais ordenados).
-        for k in range(1, d + 1):
-            principal = Matrix(tuple(tuple(self.gram.rows[i][j] for j in range(k))
-                                     for i in range(k)))
-            if principal.determinant() <= 0:
+        # Critério LDLᵀ em O(d³); evita recalcular d menores principais.
+        lower = [[Fraction(int(i == j)) for j in range(d)] for i in range(d)]
+        diag = [Fraction(0)] * d
+        for j in range(d):
+            diag[j] = (self.gram.rows[j][j]
+                       - sum(lower[j][k] ** 2 * diag[k] for k in range(j)))
+            if diag[j] <= 0:
                 raise ValueError("Produto interno exige Gram positiva definida")
+            for i in range(j + 1, d):
+                lower[i][j] = (self.gram.rows[i][j]
+                              - sum(lower[i][k] * lower[j][k] * diag[k] for k in range(j))) / diag[j]
 
     def inner(self, u: Vector, v: Vector) -> Fraction:
         if u.dim != self.vector_space.dimension or v.dim != u.dim:
@@ -305,7 +316,11 @@ class MatrixLieAlgebra:
 
 @dataclass(frozen=True)
 class AffineChart:
-    """Carta global φ(x)=Ax+b; transições são difeomorfismos afins suaves."""
+    """Carta global de ℝ^n: φ(x)=Ax+b, com A,b racionais exatos.
+
+A invertibilidade sobre ℚ implica invertibilidade sobre ℝ, logo
+a carta e sua inversa são difeomorfismos reais suaves.
+"""
 
     linear: Matrix
     offset: Vector
@@ -324,7 +339,12 @@ class AffineChart:
 
 @dataclass(frozen=True)
 class AffineManifold:
-    """M = ℚ^n com atlas global afim; NÃO representa variedades arbitrárias."""
+    """M = ℝ^n, em atlas global afim de coeficientes racionais.
+
+O programa manipula somente pontos racionais, mas descreve cartas
+de um espaço real. ℚ^n isoladamente NÃO é uma variedade suave real.
+Atlas não lineares e variedades topológicas gerais ficam para versões futuras.
+"""
 
     ambient: VectorSpace
     atlas: tuple[AffineChart, ...]
@@ -447,11 +467,13 @@ class Polynomial:
         if not isinstance(other, Polynomial):
             other = Polynomial.constant(self.dimension, other)
         self._same(other)
-        terms = []
+        # Acumulação esparsa evita listas temporárias T1×T2 (não muda o limite quadrático).
+        terms: dict[tuple[int, ...], Fraction] = {}
         for powers_a, ca in self.terms:
             for powers_b, cb in other.terms:
-                terms.append((tuple(a + b for a, b in zip(powers_a, powers_b)), ca * cb))
-        return Polynomial(self.dimension, tuple(terms))
+                key = tuple(a + b for a, b in zip(powers_a, powers_b))
+                terms[key] = terms.get(key, Fraction(0)) + ca * cb
+        return Polynomial(self.dimension, tuple((p, c) for p, c in terms.items() if c))
 
     __rmul__ = __mul__
 
@@ -517,7 +539,12 @@ class Polynomial:
 
 @dataclass(frozen=True)
 class SymplecticSpace:
-    """(ℚ^(2n), ω); ω = Σ dq_i∧dp_i, matriz J=[0 I; -I 0]."""
+    """Forma simplética canônica em ℝ^(2n), representada sobre ℚ.
+
+ω = Σ dq_i∧dp_i e J=[0 I; -I 0]. Demonstrações como
+DΦᵀJ DΦ=J são identidades polinomiais exatas e continuam
+válidas sobre os reais (não só nos pontos racionais).
+"""
 
     pairs: int
     J: Matrix = field(init=False)
@@ -598,6 +625,17 @@ class FiniteProbabilitySpace:
             return math.inf
         return sum(float(p) * math.log(float(p / q)) for p, q in
                    zip(self.probabilities, other.probabilities) if p > 0)
+
+    def natural_gradient(self, differential: Vector) -> Vector:
+        """grad_g F = G⁻¹ dF; identificação de Riesz, NÃO derivada covariante.
+
+O argumento é o diferencial escrito nas coordenadas independentes
+p_1,...,p_(k-1) da variedade estatística.
+        """
+        metric = self.fisher_rao_matrix()
+        if differential.dim != metric.shape[0]:
+            raise ValueError("Diferencial fora do espaço cotangente estatístico")
+        return metric.inverse() @ differential
 
     def fisher_rao_matrix(self) -> Matrix:
         """g_ij=δ_ij/p_i + 1/p_k, em coordenadas p_1,...,p_(k-1).
@@ -737,9 +775,9 @@ class EntropicRouter:
             raise ValueError("Roteamento requer scores e temperatura positiva")
         if any(not math.isfinite(v) for v in scores):
             raise ValueError("Scores devem ser finitos")
-        scaled = [s / temperature for s in scores]
-        peak = max(scaled)
-        exps = [math.exp(s - peak) for s in scaled]
+        # Subtrair o máximo antes de dividir evita ∞−∞ no softmax.
+        peak = max(scores)
+        exps = [math.exp((s - peak) / temperature) for s in scores]
         norm = sum(exps)
         return tuple(v / norm for v in exps)
 
@@ -773,8 +811,8 @@ class RotarySO2:
             raise ValueError("RoPE exige dimensão par e base positiva")
 
     def apply(self, v: Sequence[float], position: float) -> tuple[float, ...]:
-        if len(v) != self.dimension:
-            raise ValueError("Dimensão errada do embedding")
+        if len(v) != self.dimension or not math.isfinite(position):
+            raise ValueError("Dimensão errada ou posição não finita")
         half = self.dimension // 2
         left, right = [], []
         for i in range(half):
@@ -880,12 +918,26 @@ class SymbolicCrystallizer:
         return f * Fraction(sign * den, divisor)
 
     def discover(self, phase: SymplecticSpace, energy: Polynomial,
-                 maximum_degree: int = 2) -> tuple[Polynomial, ...]:
+                 maximum_degree: int = 2, *, max_terms: int = 4000,
+                 parity: int | None = None) -> tuple[Polynomial, ...]:
         if maximum_degree < 1 or energy.dimension != phase.dimension:
             raise ValueError("Grau ou espaço de fase inválido")
         n = phase.dimension
-        exponents = [p for p in itertools.product(range(maximum_degree + 1), repeat=n)
-                     if 1 <= sum(p) <= maximum_degree]
+        # Composições com soma limitada; evita materializar (d+1)^n tuplas.
+        # A paridade opcional deve ser justificada pela simetria de H.
+        if parity not in (None, 0, 1):
+            raise ValueError("Paridade deve ser 0, 1 ou None")
+        exponents = []
+        def generate(prefix, index, remaining):
+            if index == n:
+                if 1 <= sum(prefix) <= maximum_degree and (parity is None or sum(prefix) % 2 == parity):
+                    exponents.append(tuple(prefix))
+                    if len(exponents) > max_terms:
+                        raise RuntimeError("Ansatz excedeu limite explícito de monômios")
+            else:
+                for k in range(remaining + 1):
+                    generate(prefix + [k], index + 1, remaining - k)
+        generate([], 0, maximum_degree)
         exponents.sort(key=lambda p: (sum(p), p))
         basis = [Polynomial(n, ((p, Fraction(1)),)) for p in exponents]
         kernel = self._nullspace([phase.poisson(f, energy) for f in basis])
@@ -1009,6 +1061,26 @@ class AxiomaticTests(unittest.TestCase):
         self.assertEqual(len(found), 1)  # Para este H genérico, só L no grau ≤2.
         self.assertTrue(found[0] == charge or found[0] == -charge)
 
+    def test_poisson_jacobi_identity_and_hamilton_equations(self):
+        phase = SymplecticSpace(1)
+        q, p = Polynomial.variable(2, 0), Polynomial.variable(2, 1)
+        f, g, h = q * p, q**2 + p, p**3 + q
+        b = phase.poisson
+        self.assertTrue((b(f, b(g, h)) + b(g, b(h, f)) + b(h, b(f, g))).is_zero)
+        self.assertEqual(phase.hamiltonian_field(q**2 / 2 + p**2 / 2), (p, -q))
+        self.assertEqual(b(f, h), -b(h, f))
+
+    def test_natural_gradient_is_metric_dual(self):
+        p = FiniteProbabilitySpace(("a", "b", "c"), (Fraction(1, 2), Fraction(1, 3), Fraction(1, 6)))
+        differential = Vector((2, 3))
+        tangent = p.natural_gradient(differential)
+        self.assertEqual(p.fisher_rao_matrix() @ tangent, differential)
+
+    def test_router_extreme_scores_stable(self):
+        probs = EntropicRouter.weights((1e308, 1e308))
+        self.assertEqual(probs, (0.5, 0.5))
+        self.assertEqual(EntropicRouter.weights((1e308, 0.0)), (1.0, 0.0))
+
     def test_symplectic_euler_certificates(self):
         phase, h = canonical_example()
         integrator = SymplecticEuler(HamiltonianFlow(phase, h), Fraction(1, 10))
@@ -1077,6 +1149,27 @@ def main():
             raise SystemExit(1)
     if args.demo or not args.test:
         demo()
+
+
+# A API avançada é carregada sob demanda, preservando compatibilidade de imports.
+_ADVANCED_NAMES = frozenset({
+    "bareiss_determinant", "rational_ldlt", "QuadraticNumber", "CovariantTensor",
+    "DifferentialForm", "RationalFunction", "RationalChart", "RationalAtlas",
+    "groebner_basis", "polynomial_division", "ideal_contains", "RationalInterval",
+    "interval_exp", "interval_sin", "interval_cos", "interval_log", "interval_pi",
+    "FisherSphere", "GaussianFamily", "ImplicitMidpoint", "VelocityVerlet",
+    "Yoshida4", "ContactFlow", "SymbolicExpr", "DifferentiableRouter",
+    "SO3", "SE3", "CausalMultiHeadAttention", "noether_charge",
+    "algebraic_independence_rank", "independent_invariants", "pruned_monomials",
+    "PolynomialPoissonTensor", "so3_lie_poisson", "export_lean_conservation",
+})
+
+
+def __getattr__(name):
+    if name in _ADVANCED_NAMES:
+        import ml_mathlib_advanced
+        return getattr(ml_mathlib_advanced, name)
+    raise AttributeError(name)
 
 
 if __name__ == "__main__":

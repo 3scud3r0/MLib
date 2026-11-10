@@ -1141,12 +1141,12 @@ def main():
     parser = argparse.ArgumentParser(description="ML-MATHLIB: álgebra e invariantes exatos")
     parser.add_argument("--test", action="store_true", help="Executa a suíte de axiomas e certificados")
     parser.add_argument("--demo", action="store_true", help="Executa a prova de fogo de Noether")
-    parser.add_argument("--test-all", action="store_true", help="Executa regressões 0.1 + extensões 0.2, 0.3 e 0.4")
+    parser.add_argument("--test-all", action="store_true", help="Executa regressões 0.1 + extensões 0.2, 0.3, 0.4 e 0.5")
     args = parser.parse_args()
     if args.test or args.test_all:
         suite = unittest.defaultTestLoader.loadTestsFromTestCase(AxiomaticTests)
         if args.test_all:
-            for module in ("test_ml_mathlib_advanced", "test_ml_mathlib_exact", "test_ml_mathlib_verified"):
+            for module in ("test_ml_mathlib_advanced", "test_ml_mathlib_exact", "test_ml_mathlib_verified", "test_ml_mathlib_foundations"):
                 suite.addTests(unittest.defaultTestLoader.loadTestsFromName(module))
         result = unittest.TextTestRunner(verbosity=2).run(suite)
         if not result.wasSuccessful():
@@ -1195,7 +1195,20 @@ _VERIFIED_NAMES = frozenset({
     "ExactQuadraticMidpoint", "OrnsteinUhlenbeckMoments",
 })
 
+_FOUNDATIONS_NAMES = frozenset({
+    "ModularSolveCertificate", "modular_solve", "IsolatedRealRoot",
+    "isolate_real_roots", "characteristic_polynomial", "real_spectrum_intervals",
+    "RationalAtlasCocycle", "DenseTensor", "GeometricCountableMeasure",
+    "MultivariateGaussianLaw", "FisherSimplexStrata", "PolynomialContactFlow",
+    "CayleySO3", "SoftmaxJet", "KillingCasimirCertificate", "killing_casimir",
+    "ImplicitMidpointSymplecticCertificate", "formal_midpoint_symplectic",
+    "RationalSE3Adjoint", "CompleteRealRootCertificate", "certify_all_real_roots",
+})
+
 def __getattr__(name):
+    if name in _FOUNDATIONS_NAMES:
+        import ml_mathlib_foundations
+        return getattr(ml_mathlib_foundations, name)
     if name in _VERIFIED_NAMES:
         import ml_mathlib_verified
         return getattr(ml_mathlib_verified, name)

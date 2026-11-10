@@ -26,7 +26,7 @@ def render(root):
         'LeanML — código-fonte e configuração concatenados (UTF-8)\n',
         'Este arquivo reúne o código textual; não é um executável nem um artefato binário.\n',
         'Inclui fontes ativos, testes, scripts, CI, configurações e documentação.\n',
-        'O histórico em legacy/ e as dependências do Mathlib não integram esta exportação.\n',
+        'O código histórico removido e as dependências do Mathlib não integram esta exportação.\n',
         'A evidência de compilação está em docs/VALIDATION.md e o escopo em docs/STATUS.md.\n\n',
         f'ARQUIVOS: {len(files)}\n\nÍNDICE (caminho | bytes | SHA-256)\n',
     ]

@@ -1,54 +1,52 @@
 # LeanML
 
-Formalização axiomática de fundamentos do aprendizado de máquina em **Lean 4 / Mathlib**.
-O projeto ativo é uma biblioteca Lean. O projeto anterior foi preservado em
-[`legacy/`](legacy/ARCHIVE.md), com manifesto de hashes e cópia do histórico Git.
+Biblioteca de fundamentos matemáticos de aprendizado de máquina em **Lean 4 / Mathlib**.
+A entrada pública é [`LeanML.lean`](LeanML.lean). As provas são verificadas pelo kernel;
+nenhum teorema pendente é introduzido como axioma.
 
 ```sh
 source scripts/activate.sh
 lake exe cache get
-lake build
 bash scripts/check.sh
+python3 scripts/export_code.py
 ```
 
-Instale [elan](https://github.com/leanprover/elan) e inclua `~/.elan/bin` no `PATH`.
-O arquivo `lean-toolchain` seleciona o compilador. O commit do Mathlib e as
-revisões transitivas estão fixados em `lakefile.lean` e `lake-manifest.json`.
-A configuração atual usa Lean **v4.36.0-rc2**, compatível com o Mathlib consultado
-na migração. O v4.15.0 citado no roteiro não é compatível com esse Mathlib.
-Não atualizar a dependência flutuantemente é uma escolha de reprodutibilidade.
+Instale [elan](https://github.com/leanprover/elan) antes de executar esses comandos.
+O projeto fixa Lean **v4.36.0-rc2** e o commit do Mathlib em `lakefile.lean` e
+`lake-manifest.json`. O Lean 4.15 do roteiro inicial é incompatível com essa revisão.
+Para compilar as dependências a partir dos fontes, use `lake --no-cache build`.
+Para rematerializar dependências sem baixar automaticamente o cache, use
+`MATHLIB_NO_CACHE_ON_UPDATE=1 lake update`. O cache oficial requer `cache.mathlib.org`.
 
-Para compilar sem cache de rede, use `lake --no-cache build`.
-Para rematerializar dependências sem disparar o download automático do cache,
-use `MATHLIB_NO_CACHE_ON_UPDATE=1 lake update`. O cache oficial requer acesso a
-`cache.mathlib.org`; o compilador e as dependências usam também GitHub e seus
-hosts de download. A compilação a partir dos fontes é consideravelmente mais demorada.
+| Área | Resultados e interfaces |
+|---|---|
+| Informação | Entropia finita, KL de medidas, processamento de dados, desigualdade de informação |
+| Otimização | Suavidade com gradiente genuíno, descida, taxas convexas e PL, geometria de mínimos quadrados |
+| Aprendizagem | Risco, Hoeffding, Azuma-Hoeffding, Chebyshev, VC, Sauer-Shelah, mudança de medida variacional |
+| Representação | MLP, atenção equivariante, kernels finitos positivos, DeepSets invariantes, classificação de convoluções em grupos finitos |
+| Robustez | Produto de constantes Lipschitz, margem adversarial estrita, equilíbrio de DEQs, erro de quantização |
+| Generativos | Acoplamentos finitos, dualidade fraca de transporte, ELBO, Tweedie para misturas gaussianas escalares |
+| Reforço | Bellman para MDPs finitos descontados, unicidade e convergência de iteração de valor |
+| Privacidade | Preservação de privacidade diferencial por pós-processamento mensurável determinístico |
+| Confiabilidade | Decomposição finita de Brier em calibração, resolução e incerteza |
+| Jogos | Minimax de Sion na forma de ponto de sela, reutilizado do Mathlib |
 
-A entrada pública é [`LeanML.lean`](LeanML.lean), com cinco áreas:
+Há **40 módulos**, além da entrada e três arquivos de testes. O
+[inventário](docs/STATUS.md) identifica as provas completas, especializações e
+pendências dos 58 tópicos adicionais solicitados. Cybenko, NTK no limite infinito,
+PAC-Bayes de alta probabilidade e reversão de Anderson **ainda não estão provados**.
+Uma especificação em `Prop` não demonstra o teorema que descreve.
 
-| Pilar | Diretório | Conteúdo |
-|---|---|---|
-| Informação | `LeanML/Information/` | Entropia finita, KL de medidas e processamento de dados |
-| Otimização | `LeanML/Optimization/` | Gradientes, descida, taxas e regras de diferenciação |
-| Aprendizagem | `LeanML/LearningTheory/` | Riscos, concentração, VC, Sauer-Shelah e especificações PAC |
-| Representação | `LeanML/Representation/` | Ativações, redes dimensionadas, convolução e atenção |
-| Modelos generativos | `LeanML/Generative/` | Acoplamentos finitos, ELBO e interfaces de difusão |
+Os limites de robustez preservam decisões sob hipóteses explícitas de margem e
+Lipschitz. Eles não certificam a verdade semântica das respostas de um modelo.
+A cota de erro de quantização por entrada inclui os fatores de dimensão necessários.
 
-O [estado dos teoremas](docs/STATUS.md) distingue resultados demonstrados,
-resultados reutilizados do Mathlib e especificações ainda sem prova. A presença
-de um arquivo com o nome de um grande teorema não significa que ele já esteja
-formalizado. Nenhum resultado pendente é introduzido como axioma.
+O [relatório de validação](docs/VALIDATION.md) descreve os comandos e o alcance dos testes.
+As [regras de contribuição](CONTRIBUTING.md) exigem hipóteses explícitas e provas sem lacunas.
 
-A definição de suavidade inclui `HasGradientAt f (g x) x`: exigir apenas que um
-campo vetorial arbitrário seja Lipschitz não implica o lema da descida para `f`.
-As hipóteses de suporte, integrabilidade, positividade e mensurabilidade aparecem
-nos tipos das definições e dos teoremas correspondentes.
+O código Python/Rust e a documentação sem relação com LeanML foram retirados da
+árvore ativa. Permanecem recuperáveis no histórico Git; esta versão não depende deles.
 
-A migração passou no build, nos exemplos e na auditoria de 22 teoremas centrais;
-veja [docs/VALIDATION.md](docs/VALIDATION.md) para a evidência e o alcance.
-
-Veja [CONTRIBUTING.md](CONTRIBUTING.md) para os critérios de contribuição.
-
-O arquivo [exports/LeanML_codigo_completo.txt](exports/LeanML_codigo_completo.txt)
-reúne todas as fontes ativas, testes, scripts, configurações e documentação em
-texto UTF-8. Para regenerá-lo, execute `python3 scripts/export_code.py`.
+[Baixar todo o código em TXT](exports/LeanML_codigo_completo.txt).
+A exportação UTF-8 inclui fontes, testes, scripts, CI, configurações e documentação,
+com índice de tamanhos e hashes SHA-256. Não inclui dependências de terceiros ou binários.

@@ -4,10 +4,11 @@ build-backend = "maturin"
 
 [project]
 name = "mlib-core"
-version = "0.1.0"
+version = "0.2.0"
 requires-python = ">=3.9"
 description = "Exact Rust certificate checking for MLib"
 
 [tool.maturin]
 features = ["python"]
-module-name = "mlib_core"
+module-name = "mlib_core._mlib_core"
+python-source = "python"

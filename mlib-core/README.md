@@ -69,3 +69,7 @@ certificate = kernel.verify_positive_gram([["2", "1"], ["1", "2"]])
 ## Limites explícitos
 
 Sem tipos dependentes gerais, física em variedades arbitrárias, integrais transcendentais, teoria geral da medida, eliminação algébrica com escala industrial, SVD geral ou garantia de terminação/tempo polinomial de normalização multivariada. Regras de inferência são decidíveis somente no escopo matemático aqui documentado. Testes de unidade não substituem análise de soundness nem prova formal externa.
+
+## Integração Python / NABLA-GPT (revisão 0.2)
+
+Consulte [`../README_MLIB_KERNEL_INTEGRATION.md`](../README_MLIB_KERNEL_INTEGRATION.md) para a API instalada `from mlib_core import PhaseSpace, Kernel, DiscoverySession`, a execução com checkpoint seguro e os limites dos caminhos rápidos de MDC.

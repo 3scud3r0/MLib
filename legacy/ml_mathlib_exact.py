@@ -340,6 +340,30 @@ class ExactYoshida4:
         return tuple(coords)
 
 # ─────────────────────────── Certified interval analysis ──────────────
+def interval_nth_root(x:F,degree:int,digits:int=18)->RationalInterval:
+    """Nonnegative real root with rational bounds proved by integer powers.
+
+    The explicit limits bound the requested scale and root degree. No log,
+    float conversion, or approximate root is used in the certificate bounds.
+    """
+    x=Q(x)
+    if (x<0 or type(degree) is not int or not 1<=degree<=1024
+            or type(digits) is not int or not 1<=digits<=4096):
+        raise ValueError('Require x>=0, degree in 1..1024 and digits in 1..4096')
+    scale=10**digits
+    scaled=x*scale**degree
+    target=scaled.numerator//scaled.denominator
+    lo=0;hi=1<<((target.bit_length()+degree-1)//degree)
+    while lo+1<hi:
+        mid=(lo+hi)//2
+        if mid**degree<=target:lo=mid
+        else:hi=mid
+    if hi**degree<=target:lo=hi
+    lower=F(lo,scale)
+    upper=lower if lower**degree==x else F(lo+1,scale)
+    return RationalInterval(lower,upper)
+
+
 def interval_sqrt(x:F,digits:int=16)->RationalInterval:
     """sqrt(x) with exact rational outer bounds at 10^-digits resolution."""
     x=Q(x)
@@ -862,7 +886,24 @@ class AnalyticExpression:
         if i<0:raise ValueError('Variable index must be nonnegative')
         return AnalyticExpression('var',(i,))
     @staticmethod
-    def cast(x):return x if isinstance(x,AnalyticExpression) else AnalyticExpression.constant(x)
+    def cast(x):
+        if isinstance(x,AnalyticExpression):return x
+        if isinstance(x,Polynomial):
+            result=AnalyticExpression.constant(0)
+            for powers,coefficient in x.terms:
+                term=AnalyticExpression.constant(coefficient)
+                for i,power in enumerate(powers):
+                    if power:term=term*AnalyticExpression.variable(i)**power
+                result=result+term
+            return result
+        if isinstance(x,RationalFunction):
+            # Restrictions already removed by RationalFunction normalization
+            # cannot be recovered; the current denominator is preserved.
+            return AnalyticExpression.cast(x.numerator)/AnalyticExpression.cast(x.denominator)
+        if isinstance(x,QuadraticAlgebraicFunction):
+            return (AnalyticExpression.cast(x.a)+AnalyticExpression.cast(x.b)
+                    *AnalyticExpression.cast(x.r).sqrt())
+        return AnalyticExpression.constant(x)
     def __add__(self,x):return AnalyticExpression('add',(self,self.cast(x)))
     __radd__=__add__
     def __neg__(self):return AnalyticExpression('neg',(self,))
@@ -873,6 +914,9 @@ class AnalyticExpression:
     def __truediv__(self,x):return self*self.cast(x)**-1
     def __rtruediv__(self,x):return self.cast(x)*self**-1
     def __pow__(self,k):
+        if isinstance(k,F) and k.denominator!=1:
+            return AnalyticExpression('rpow',(self,k))
+        if isinstance(k,F):k=k.numerator
         if not isinstance(k,int):raise TypeError('Integer power only; use sqrt for half powers')
         return AnalyticExpression('pow',(self,k))
     def exp(self):return AnalyticExpression('exp',(self,))
@@ -880,6 +924,48 @@ class AnalyticExpression:
     def sin(self):return AnalyticExpression('sin',(self,))
     def cos(self):return AnalyticExpression('cos',(self,))
     def sqrt(self):return AnalyticExpression('sqrt',(self,))
+
+    def compose(self,components):
+        """Simultaneous substitution; does not substitute inside replacements."""
+        op=self.operation;a=self.args
+        if op=='const':return self
+        if op=='var':return self.cast(components[a[0]])
+        if op in ('pow','rpow'):
+            return AnalyticExpression(op,(a[0].compose(components),a[1]))
+        if op in ('add','mul','neg','exp','log','sin','cos','sqrt'):
+            return AnalyticExpression(op,tuple(x.compose(components) for x in a))
+        raise ValueError('Unknown formal primitive')
+
+    def gradient(self,dimension):
+        if type(dimension) is not int or dimension<1:raise ValueError('Positive dimension required')
+        return tuple(self.diff(i) for i in range(dimension))
+
+    def hessian(self,dimension):
+        return tuple(tuple(d.diff(j) for j in range(dimension)) for d in self.gradient(dimension))
+
+    def enclose_adaptive(self,point,tolerance=F(1,10**12),*,initial_digits=8,max_digits=128):
+        """Refine until a guaranteed width is met, or fail explicitly.
+
+        A box's intrinsic range or dependency overestimation may prevent
+        convergence. Precision is a work parameter, not a decimal guarantee.
+        """
+        tolerance=Q(tolerance)
+        if (tolerance<=0 or type(initial_digits) is not int or type(max_digits) is not int
+                or initial_digits<1 or max_digits<initial_digits):
+            raise ValueError('Positive tolerance and valid precision budget required')
+        digits=initial_digits
+        while True:
+            try:
+                box=self.enclose(point,digits)
+            except ZeroDivisionError:
+                # A rounded positive root can still have lower bound zero.
+                # Retrying is safe; an actual pole still fails at the budget.
+                if digits==max_digits:raise
+                digits=min(2*digits,max_digits)
+                continue
+            if box.hi-box.lo<=tolerance:return box
+            if digits==max_digits:raise RuntimeError('Enclosure width exceeds tolerance at precision budget')
+            digits=min(2*digits,max_digits)
 
     def diff(self,i):
         op=self.operation;a=self.args
@@ -889,6 +975,7 @@ class AnalyticExpression:
         if op=='neg':return -a[0].diff(i)
         if op=='mul':return a[0].diff(i)*a[1]+a[0]*a[1].diff(i)
         if op=='pow':return self.constant(a[1])*a[0]**(a[1]-1)*a[0].diff(i) if a[1] else self.constant(0)
+        if op=='rpow':return a[1]*a[0]**(a[1]-1)*a[0].diff(i)
         if op=='exp':return self*a[0].diff(i)
         if op=='log':return a[0].diff(i)/a[0]
         if op=='sin':return a[0].cos()*a[0].diff(i)
@@ -904,6 +991,12 @@ class AnalyticExpression:
         if op=='neg':return -a[0].enclose(point,digits)
         if op=='mul':return a[0].enclose(point,digits)*a[1].enclose(point,digits)
         if op=='pow':return interval_power(a[0].enclose(point,digits),a[1])
+        if op=='rpow':
+            box=a[0].enclose(point,digits)
+            if box.lo<=0:raise ValueError('Rational power requires the strictly positive real branch')
+            lower=interval_nth_root(box.lo,a[1].denominator,digits).lo
+            upper=interval_nth_root(box.hi,a[1].denominator,digits).hi
+            return interval_power(RationalInterval(lower,upper),a[1].numerator)
         if op=='sqrt':
             box=a[0].enclose(point,digits)
             if box.lo<0:raise ValueError('sqrt input interval not proven nonnegative')
@@ -932,7 +1025,7 @@ class SparseExactKernel:
     """
     def __init__(self,ncols:int,max_nonzeros:int=200_000):
         if ncols<1 or max_nonzeros<1:raise ValueError('Positive dimensions and cap')
-        self.n=ncols;self.max_nonzeros=max_nonzeros;self.pivots={}
+        self.n=ncols;self.max_nonzeros=max_nonzeros;self.pivots={};self._nonzeros=0
 
     @staticmethod
     def _primitive(row:dict[int,int]):
@@ -945,17 +1038,21 @@ class SparseExactKernel:
             raise ValueError('Sparse row index invalid')
         den=math.lcm(*(Q(x).denominator for x in values.values())) if values else 1
         row=self._primitive({i:int(Q(v)*den) for i,v in values.items()})
-        for j in sorted(self.pivots):
-            if j not in row:continue
+        # Follow only encountered leading pivots. Scanning every stored pivot
+        # makes even diagonal input quadratic in the number of equations.
+        while row:
+            j=min(row)
+            if j not in self.pivots:break
             p=self.pivots[j];a=row[j];b=p[j];g=math.gcd(a,b)
             keys=row.keys()|p.keys()
             row=self._primitive({k:(b//g)*row.get(k,0)-(a//g)*p.get(k,0) for k in keys})
         if not row:return False
         pivot=min(row)
         if row[pivot]<0:row={i:-v for i,v in row.items()}
-        if sum(len(r) for r in self.pivots.values())+len(row)>self.max_nonzeros:
+        if self._nonzeros+len(row)>self.max_nonzeros:
             raise MemoryError('Sparse elimination nonzero cap exceeded')
         self.pivots[pivot]=row
+        self._nonzeros+=len(row)
         return True
 
     @property

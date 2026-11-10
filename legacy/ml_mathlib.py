@@ -919,7 +919,9 @@ class SymbolicCrystallizer:
 
     def discover(self, phase: SymplecticSpace, energy: Polynomial,
                  maximum_degree: int = 2, *, max_terms: int = 4000,
-                 parity: int | None = None) -> tuple[Polynomial, ...]:
+                 parity: int | None = None, backend: str = 'sparse',
+                 max_nonzeros: int = 200_000,
+                 max_basis: int = 4000) -> tuple[Polynomial, ...]:
         if maximum_degree < 1 or energy.dimension != phase.dimension:
             raise ValueError("Grau ou espaço de fase inválido")
         n = phase.dimension
@@ -927,6 +929,10 @@ class SymbolicCrystallizer:
         # A paridade opcional deve ser justificada pela simetria de H.
         if parity not in (None, 0, 1):
             raise ValueError("Paridade deve ser 0, 1 ou None")
+        if backend not in ('sparse', 'dense'):
+            raise ValueError("Backend deve ser sparse ou dense")
+        if any(type(v) is not int or v < 1 for v in (max_terms, max_nonzeros, max_basis)):
+            raise ValueError("Orçamentos devem ser inteiros positivos")
         exponents = []
         def generate(prefix, index, remaining):
             if index == n:
@@ -940,7 +946,29 @@ class SymbolicCrystallizer:
         generate([], 0, maximum_degree)
         exponents.sort(key=lambda p: (sum(p), p))
         basis = [Polynomial(n, ((p, Fraction(1)),)) for p in exponents]
-        kernel = self._nullspace([phase.poisson(f, energy) for f in basis])
+        if backend == 'dense':
+            kernel = self._nullspace([phase.poisson(f, energy) for f in basis])
+            if len(kernel) > max_basis:
+                raise RuntimeError('Kernel basis size exceeds explicit cap')
+        else:
+            # Transpose sparse polynomial images directly into sparse constraints.
+            # No monomials-by-ansatz dense matrix is allocated.
+            from ml_mathlib_exact import SparseExactKernel
+            constraints = {}
+            nonzeros = 0
+            for j, monomial in enumerate(basis):
+                for powers, coefficient in phase.poisson(monomial, energy).terms:
+                    nonzeros += 1
+                    if nonzeros > max_nonzeros:
+                        raise MemoryError('Polynomial constraint nonzero cap exceeded')
+                    constraints.setdefault(powers, {})[j] = coefficient
+            if basis:
+                solver = SparseExactKernel(len(basis), max_nonzeros=max_nonzeros)
+                for powers in sorted(constraints):
+                    solver.add_equation(constraints[powers])
+                kernel = solver.basis(max_basis=max_basis)
+            else:
+                kernel = ()
         candidates = []
         for weights in kernel:
             candidate = Polynomial.constant(n, 0)
@@ -948,7 +976,8 @@ class SymbolicCrystallizer:
                 if w:
                     candidate += monomial * w
             candidate = self._primitive(candidate)
-            assert phase.poisson(candidate, energy).is_zero
+            if not phase.poisson(candidate, energy).is_zero:
+                raise ArithmeticError('Invariant failed exact Poisson verification')
             if not candidate.is_zero and candidate not in candidates:
                 candidates.append(candidate)
         return tuple(candidates)
@@ -1146,7 +1175,7 @@ def main():
     if args.test or args.test_all:
         suite = unittest.defaultTestLoader.loadTestsFromTestCase(AxiomaticTests)
         if args.test_all:
-            for module in ("test_ml_mathlib_advanced", "test_ml_mathlib_exact", "test_ml_mathlib_verified", "test_ml_mathlib_foundations"):
+            for module in ("test_ml_mathlib_advanced", "test_ml_mathlib_exact", "test_ml_mathlib_verified", "test_ml_mathlib_foundations", "test_ml_mathlib_linear", "test_ml_mathlib_analytic"):
                 suite.addTests(unittest.defaultTestLoader.loadTestsFromName(module))
         result = unittest.TextTestRunner(verbosity=2).run(suite)
         if not result.wasSuccessful():
@@ -1172,7 +1201,7 @@ _ADVANCED_NAMES = frozenset({
 _EXACT_NAMES = frozenset({
     "crt_pair", "crt_many", "modular_determinant", "primitive_integer_kernel",
     "irreducible_mod_prime", "NumberField", "AlgebraicElement", "ExactYoshida4",
-    "interval_sqrt", "interval_power", "interval_eval", "interval_exp_global",
+    "interval_sqrt", "interval_nth_root", "interval_power", "interval_eval", "interval_exp_global",
     "interval_log_global", "interval_sin_cos_global", "interval_arccos_unit",
     "MidpointContractionCertificate", "MixedTensor", "rational_matrix_inverse",
     "RationalRiemannianMetric", "SU2", "RationalLieAlgebra",
@@ -1206,6 +1235,9 @@ _FOUNDATIONS_NAMES = frozenset({
 })
 
 def __getattr__(name):
+    if name in {'LinearSystemCertificate', 'exact_linear_solve', 'verify_linear_certificate'}:
+        import ml_mathlib_linear
+        return getattr(ml_mathlib_linear, name)
     if name in _FOUNDATIONS_NAMES:
         import ml_mathlib_foundations
         return getattr(ml_mathlib_foundations, name)

@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ['3.11', '3.13']
+        python-version: ['3.11', '3.12', '3.13']
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -18,3 +18,12 @@ jobs:
         run: python ml_mathlib.py --test-all
       - name: Revalidate published algebraic conservation witness
         run: python replay_certificate.py examples/central_force_conservation.json
+      - name: Install package and exercise installed API outside checkout
+        shell: bash
+        run: |
+          python -m pip install .
+          cd "$RUNNER_TEMP"
+          ml-mathlib --demo
+          python -c 'from ml_mathlib import Matrix, Vector, exact_linear_solve; assert exact_linear_solve(Matrix(((1, 2),)), Vector((3,))).verify()'
+      - name: New certificate and domain checks with assertions disabled
+        run: python -O -m unittest test_ml_mathlib_linear test_ml_mathlib_analytic

@@ -1,0 +1,9 @@
+.lake/
+# Retain historical sources, omit archived generated files from future commits.
+legacy/.venv/
+legacy/__pycache__/
+legacy/build/
+legacy/*.egg-info/
+legacy/.lake/
+__pycache__/
+*.py[cod]

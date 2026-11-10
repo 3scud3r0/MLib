@@ -1,0 +1,21 @@
+name: LeanML formal verification
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+jobs:
+  kernel:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install elan
+        shell: bash
+        run: |
+          curl --fail --silent --show-error --location https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -o /tmp/elan-init.sh
+          sh /tmp/elan-init.sh -y --default-toolchain none
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Restore compiled dependencies
+        run: lake exe cache get
+      - name: Build and kernel-check LeanML
+        run: bash scripts/check.sh

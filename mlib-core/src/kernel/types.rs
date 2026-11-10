@@ -15,6 +15,7 @@ pub enum MathematicalType {
     IsLocallySymplecticMap{pairs:usize},
     IsNoetherInvariant{pairs:usize},
     IsCasimir{dim:usize},
+    IsGcdPolynomial{vars:usize},
     IsValidLieAlgebra{dim:usize},
     IsPositiveDefinite{dim:usize},
 }

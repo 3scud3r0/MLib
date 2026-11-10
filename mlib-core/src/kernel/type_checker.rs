@@ -80,6 +80,34 @@ impl<'env> TypeChecker<'env>{
         let evidence=hash_evidence("local_symplectic_map",n,&refs,&domains);
         Ok(make_theorem(MathematicalType::IsLocallySymplecticMap{pairs},evidence,domains,None))
     }
+    /// Certify that an untrusted polynomial GCD hint is greatest, not merely
+    /// a common divisor: the two exact cofactors must have GCD equal to 1.
+    /// The hint is not trusted; every step is recomputed by this kernel.
+    pub fn verify_gcd_hint(&self,nvars:usize,a:TermId,b:TermId,hint:TermId)->KernelResult<CertifiedTheorem>{
+        if nvars==0||nvars>128{
+            return Err(KernelError::DimensionMismatch("GCD exige 1..128 variáveis".into()));
+        }
+        let aa=self.normalize_scalar(a,nvars)?;
+        let bb=self.normalize_scalar(b,nvars)?;
+        let gg=self.normalize_scalar(hint,nvars)?;
+        for f in [&aa,&bb,&gg]{
+            if !f.denominator().is_one()||!f.exclusions().is_empty(){
+                return Err(KernelError::DomainSingularity("certificado de GCD requer polinômios globais, não funções racionais com polos".into()));
+            }
+        }
+        if gg.numerator().is_zero(){return Err(KernelError::InvalidCertificate("candidato a GCD igual a zero".into()));}
+        if aa.numerator().is_zero() && bb.numerator().is_zero(){
+            return Err(KernelError::InvalidCertificate("GCD(0,0) indeterminado".into()));
+        }
+        let divisor=gg.numerator().monic();
+        let co_a=aa.numerator().exact_div(&divisor).map_err(|_|KernelError::InvalidCertificate("candidato não divide A".into()))?;
+        let co_b=bb.numerator().exact_div(&divisor).map_err(|_|KernelError::InvalidCertificate("candidato não divide B".into()))?;
+        if !co_a.gcd(&co_b)?.is_one(){
+            return Err(KernelError::InvalidCertificate("cofatores possuem divisor comum não constante".into()));
+        }
+        let evidence=hash_evidence("gcd_polynomial",nvars,&[&aa,&bb,&gg],&[]);
+        Ok(make_theorem(MathematicalType::IsGcdPolynomial{vars:nvars},evidence,Vec::new(),None))
+    }
     pub fn verify_lie_algebra(&self,algebra:&LieAlgebra)->KernelResult<CertifiedTheorem>{
         algebra.check_jacobi()?;
         let mut h=blake3::Hasher::new();h.update(b"mlib-kernel-v1:lie_algebra");

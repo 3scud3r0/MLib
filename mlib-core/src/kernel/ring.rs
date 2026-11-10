@@ -178,6 +178,19 @@ impl Polynomial {
         self.same(other)?;
         if self.is_zero(){return Ok(other.monic())}
         if other.is_zero(){return Ok(self.monic())}
+        // Safe deterministic fast paths: avoid recursive polynomial-field
+        // Euclid for equal inputs, units, or an explicit monomial factor.
+        if self==other{return Ok(self.monic());}
+        if self.is_nonzero_constant()||other.is_nonzero_constant(){return Ok(Self::one(self.nvars));}
+        if self.terms.len()==1 || other.terms.len()==1 {
+            let (mono,poly)=if self.terms.len()==1{(self,other)}else{(other,self)};
+            let (exponent,_) = mono.lead().expect("nonzero monomial");
+            let powers=(0..self.nvars).map(|i|{
+                let min_power=poly.terms.keys().map(|p|p[i]).min().unwrap_or(0);
+                exponent[i].min(min_power)
+            }).collect::<Vec<_>>();
+            return Self::from_terms(self.nvars,[(powers,S::one())]);
+        }
         if self.nvars==0{return Ok(Self::one(0));}
         let a=self.split_last()?;let b=other.split_last()?;
         let ca=gcd_many(&a)?;let cb=gcd_many(&b)?;
@@ -272,6 +285,23 @@ impl RationalFunction {
         if denom.is_zero(){return Err(KernelError::DivisionByZero);}
         if !denom.is_nonzero_constant(){excluded.insert(denom.monic());}
         let nvars=numer.nvars();
+        // A denominator from Q* needs no multivariate GCD. Previously,
+        // polynomial-only operations triggered recursive Euclid at each AST
+        // node; eliminating that hot path improves high-dimensional cases.
+        if numer.is_zero(){
+            excluded.retain(|p|!p.is_nonzero_constant());
+            return Ok(Self{numer:Polynomial::zero(nvars),denom:Polynomial::one(nvars),excluded});
+        }
+        if denom.is_nonzero_constant(){
+            let scalar=denom.lead().expect("nonzero constant").1;
+            let inv=S::one().div(scalar)?;
+            excluded.retain(|p|!p.is_nonzero_constant());
+            return Ok(Self{numer:numer.scale(&inv),denom:Polynomial::one(nvars),excluded});
+        }
+        if numer==denom {
+            excluded.retain(|p|!p.is_nonzero_constant());
+            return Ok(Self{numer:Polynomial::one(nvars),denom:Polynomial::one(nvars),excluded});
+        }
         let gcd=numer.gcd(&denom)?;
         let mut a=numer.exact_div(&gcd)?;let mut b=denom.exact_div(&gcd)?;
         let leading=b.lead().expect("denominator nonzero").1.clone();
@@ -291,6 +321,9 @@ impl RationalFunction {
     fn guards(&self,b:&Self)->BTreeSet<Polynomial>{self.excluded.union(&b.excluded).cloned().collect()}
     pub fn add(&self,b:&Self)->KernelResult<Self>{
         self.same(b)?;
+        if self.denom==b.denom {
+            return Self::with_domain(self.numer.add(&b.numer)?,self.denom.clone(),self.guards(b));
+        }
         Self::with_domain(self.numer.mul(&b.denom)?.add(&b.numer.mul(&self.denom)?)?,self.denom.mul(&b.denom)?,self.guards(b))
     }
     pub fn neg(&self)->Self{Self{numer:self.numer.neg(),denom:self.denom.clone(),excluded:self.excluded.clone()}}

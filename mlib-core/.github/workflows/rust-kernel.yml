@@ -24,12 +24,16 @@ jobs:
         run: cargo test --manifest-path mlib-core/Cargo.toml --all-targets --no-default-features
       - name: Test optional PyO3 feature
         run: cargo test --manifest-path mlib-core/Cargo.toml --all-targets --features python
+      - name: Static Python DSL tests (without Rust module installed)
+        run: PYTHONPATH=mlib-core/python python -m unittest discover -s mlib-core/python/tests -v
       - name: Compile and import Python extension
         run: |
           python -m pip install maturin
           cd mlib-core
           maturin build --release --features python --out dist
           python -m pip install dist/*.whl
+          python -m unittest discover -s python/tests -v
+          PYTHONPATH=python python ../examples/nabla_verified_discovery.py
           python - <<'PY'
           import json
           from mlib_core import MlibKernelContext

@@ -1,0 +1,32 @@
+name: Lean 4 formal proof verification
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+jobs:
+  lean:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Lean 4 via elan
+        shell: bash
+        run: |
+          curl --fail --silent --show-error --location https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh --output /tmp/elan-init.sh
+          sh /tmp/elan-init.sh -y
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Download Mathlib4 and compiled dependencies
+        run: |
+          lake update
+          lake exe cache get
+      - name: Kernel-check every Lean proof obligation
+        shell: bash
+        run: |
+          set -euo pipefail
+          shopt -s nullglob
+          files=(lean/*.lean)
+          (( ${#files[@]} > 0 )) || { echo "No Lean proof obligations"; exit 1; }
+          for file in "${files[@]}"; do
+            echo "Lean kernel checking: $file"
+            lake env lean "$file"
+          done

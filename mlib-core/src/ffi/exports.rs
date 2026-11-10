@@ -83,7 +83,7 @@ impl MlibKernelContext{
 }
 
 #[pymodule]
-pub fn mlib_core(m:&Bound<'_,PyModule>)->PyResult<()>{
+pub fn _mlib_core(m:&Bound<'_,PyModule>)->PyResult<()>{
     m.add_class::<MlibKernelContext>()?;
     m.add_class::<PyCertifiedTheorem>()?;
     Ok(())

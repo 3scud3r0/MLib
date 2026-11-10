@@ -79,7 +79,7 @@ Apenas o segundo candidato recebe um certificado. O primeiro produz um resíduo 
 Para executar a demonstração completa:
 
 ```bash
-PYTHONPATH=mlib-core/python python examples/nabla_verified_discovery.py
+python examples/nabla_verified_discovery.py
 ```
 
 ## 5. NABLA-GPT treinado — adaptador opcional
@@ -87,7 +87,7 @@ PYTHONPATH=mlib-core/python python examples/nabla_verified_discovery.py
 Para checkpoints criados por `nabla_gpt_cuda.py` (módulo instalado ou importável):
 
 ```bash
-PYTHONPATH=mlib-core/python:. python examples/nabla_verified_discovery.py \
+PYTHONPATH=. python examples/nabla_verified_discovery.py \
   --checkpoint /caminho/checkpoint.pt --samples 8 --device cuda
 ```
 

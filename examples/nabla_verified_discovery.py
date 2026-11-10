@@ -3,10 +3,10 @@
 
 Prerequisites:
     cd mlib-core && maturin develop --features python
-    PYTHONPATH=mlib-core/python python examples/nabla_verified_discovery.py
+    python examples/nabla_verified_discovery.py
 
 Optional NVIDIA/CPU model checkpoint (trusted torch weight format only):
-    PYTHONPATH=mlib-core/python:. python examples/nabla_verified_discovery.py \
+    PYTHONPATH=. python examples/nabla_verified_discovery.py \
         --checkpoint /path/to/ckpt.pt --samples 8 --device cpu
     # `nabla_gpt_cuda.py` must be importable for the checkpoint example.
 """

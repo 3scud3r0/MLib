@@ -9,7 +9,7 @@ devem manter as hipóteses e a atribuição ao Mathlib claramente documentadas.
 Para cada mudança matemática:
 
 1. Declare domínio, normalização, integrabilidade, suporte e mensurabilidade necessários.
-2. Acrescente uma aplicação concreta ou teste de regressão em `LeanMLTest/Basic.lean`.
+2. Acrescente uma aplicação concreta ou teste de regressão em `LeanMLTest/Basic.lean` ou `LeanMLTest/Advanced.lean`.
 3. Liste os resultados principais em `LeanMLTest/Axioms.lean`.
 4. Execute `bash scripts/check.sh` e atualize `docs/STATUS.md`.
 
@@ -22,5 +22,5 @@ Resultados ainda não demonstrados podem ser definidos como propriedades em `Pro
 com status explícito de especificação. Não crie um teorema que apenas recebe como
 hipótese a conclusão desejada e o anuncie como demonstração do resultado original.
 
-`legacy/` é um arquivo histórico: não importe seus módulos no projeto ativo e não
-reative seus workflows. O escopo ativo é aprendizado de máquina formalizado.
+O escopo ativo é aprendizado de máquina formalizado. Não reintroduza os módulos
+Python/Rust históricos ou seus workflows na árvore ativa.

@@ -1,51 +1,69 @@
 LeanML — código-fonte e configuração concatenados (UTF-8)
 Este arquivo reúne o código textual; não é um executável nem um artefato binário.
 Inclui fontes ativos, testes, scripts, CI, configurações e documentação.
-O histórico em legacy/ e as dependências do Mathlib não integram esta exportação.
+O código histórico removido e as dependências do Mathlib não integram esta exportação.
 A evidência de compilação está em docs/VALIDATION.md e o escopo em docs/STATUS.md.
 
-ARQUIVOS: 39
+ARQUIVOS: 57
 
 ÍNDICE (caminho | bytes | SHA-256)
 .github/workflows/lean.yml | 667 | cb957bae9e991401683213b7ee9a5010a4ea18f1f9697624770e18054397efc6
-.gitignore | 191 | 2f0c959b667479f8f9614f3331451ae31acb556f93b15c59080ad320648c2ee0
-CONTRIBUTING.md | 1553 | 2d74bca247c30df8496cf663d1177c48c6274dc94dfc6f70ec538e8e8e233c85
-LeanML.lean | 1091 | 7f1022e165334ba9843aeab49497541cdf721c81240af4ab11bb2fe15d1dd4ca
+.gitignore | 30 | ca669ca2607a2c3dc5d78636dc38e9d74d89632b11efa08133ba06a7fc52ccc2
+CONTRIBUTING.md | 1561 | 0ab441441ff027814d962cca3e07bf06de2a2e92556f94f29db4048a4ef1f7bf
+LeanML.lean | 1808 | 51ec1e136e820b994d555db9e04494bc9cf8a66508e46d5f302784da0714334d
+LeanML/GameTheory/Minimax.lean | 1214 | ffee2526ddd1f1c7472545a0fe315e745147caf4960eee8a038bbda612982cfd
 LeanML/Generative/ELBO.lean | 2130 | 6183bf44abe23b99a34a6adb11d9c25570d4bb3b07176bfddc93bfc7ea0071b0
 LeanML/Generative/OptimalTransport.lean | 2050 | fce02606e7e0b8a833a3ed1c04367eb1ddb944428711c6e01ac1d1fb57581949
 LeanML/Generative/SDEConvergence.lean | 1188 | ab4a48815cd21b8bae61ed62f7862e76452ad41a974d3c235d7f6fed16db9eeb
+LeanML/Generative/TransportDuality.lean | 1994 | 8502ed03d571f6d6eed4f197efc3fc5341e975974f8f85ec979248faecc6c5ec
+LeanML/Generative/Tweedie.lean | 3328 | f833a41cc711a1c1c58e950a2b4cca874563df650c12fbf578a70bc0fb0e17b5
+LeanML/Information/CramerRao.lean | 866 | 45f5ef6e6c3788433265d57bda52aea2383f12597d113a3e884d0e4a50917433
 LeanML/Information/DataProcessing.lean | 968 | bd80774c9f9a0cd9d7e9e95092c4fe2f503bafe5c646514a1dbad6efcdd80fdb
 LeanML/Information/Divergence.lean | 1586 | f9108ee60be8d42aa47a2952284fac943eaa8b964277f5b1dc4d36795adafa86
 LeanML/Information/Shannon.lean | 3705 | 2ecf0f691efe3e7c67650a488dc7225c8f40b3615fbd01c329e60f4b997e3cb4
 LeanML/LearningTheory/Concentration.lean | 3182 | 9bae2c588b8225d9491ed40d010f4e6380b678ccbc384dafdb3839e5a4ac9c08
 LeanML/LearningTheory/Loss.lean | 3369 | e9991e08e0db444cec075079f6ad7720d30630350d9d3efd06fde51eac1926ac
+LeanML/LearningTheory/Martingales.lean | 1353 | c93c4b4d451fcd807ab3cc99f0b471ce40be9afea52514d3d81c8afdf0cf9ed7
 LeanML/LearningTheory/PAC.lean | 848 | bb8047abc37bc5426fe1e98f333e8ddb107301dc840282e4ba30869197a36a45
+LeanML/LearningTheory/PACBayes.lean | 1727 | b0a5e1e4100b10a4e5248e9167b30eb40ffde0cca49e8b1cb85ddd52f9976939
 LeanML/LearningTheory/Rademacher.lean | 863 | 1a9c63c2f836ccc332c27cf3356e93eb1d44b920ba3b315f3236d046e71427ba
 LeanML/LearningTheory/SauerShelah.lean | 598 | 24f501c8212499dd0b02b0a9e3709038d58f2468507b58a3bf8030d8ddaa4975
 LeanML/LearningTheory/VCDimension.lean | 1832 | 57dfc3957d505dfab3cd749b6b742cc7bfe353a1c8d0e0c35f3ff9a8b068445d
 LeanML/Optimization/Backpropagation.lean | 4262 | 25ff28f5eb711bfd90b5299113fe1d81be0ac4b1f8b28cd87feecef6aacd077c
 LeanML/Optimization/GradientDescent.lean | 7857 | f6a65af75baac4d82846f8e014e1c27f1c3e244235a6f2b9ef3edd2a3e693e8c
+LeanML/Optimization/LeastSquares.lean | 1791 | 2fb18a2bad7afdc4b13c93550c9aff385314fd8530cb114db5464993e7276d12
 LeanML/Optimization/Nesterov.lean | 906 | 79c7802d021f9c3286ff74e3bee21551fbf557b6f8efec81238ad58d7df59d2c
+LeanML/Optimization/PolyakLojasiewicz.lean | 2206 | 0b7796c49b892ea0588ce0e16caccf72d094743919f516e4d16338213b477d92
 LeanML/Optimization/Smoothness.lean | 4443 | deef9e8fe961dd4e4ef82d1ca6bc9a4cef01437c4df9d0287929da5b5ddec5db
 LeanML/Optimization/Stochastic.lean | 738 | 9e7a016c5d46d04b3718647d4c5a911600a83d960ce22891ad77af809511aaab
+LeanML/Privacy/Differential.lean | 1579 | 53d5d0640d5c6681155d918eacdf463c3fbd9140dad16332128c6419b26b6c94
+LeanML/Reinforcement/Bellman.lean | 3832 | e78618c468e6b124a1ae7b9288a136aeff4144c04431c301eed0efc54040ab4e
+LeanML/Reliability/Brier.lean | 2052 | f2578a25e8353410d3dc81a850e54dcc7ea97b4769b062c4a808e3c3ea81be07
 LeanML/Representation/Activation.lean | 723 | ae9cad30b86643a39daec3a8ef67149b95da9a02893a8c581857001389d85e8b
 LeanML/Representation/Attention.lean | 3583 | c8a253831d2702b9c7c70e2f0177a2a975a2f008765c3235b0fa506588fd01f6
 LeanML/Representation/Convolution.lean | 854 | 856c0c5d186f70c6f8863f00aba306a02c25f07d407ad66882ba2365abbfcc61
 LeanML/Representation/Cybenko.lean | 1350 | f28a1e56d0f0642eb4525bb7e88666ed31f06ae25173c5e402ea1d4e4a9b612a
+LeanML/Representation/DeepSets.lean | 737 | c4319cb3632a947fa8c8f4d3a8f860af83ea73d149b3be06b702359c78e5cfff
+LeanML/Representation/GroupConvolution.lean | 2284 | 39350624846ec3bf6d2dfe57dfc1c8e4f3331ffa8ff456f330013435eb973ddd
+LeanML/Representation/Kernels.lean | 1536 | bae8ca8ffb3614a550a896b804666eeb86dfa491c115f8ff6cd88897a1746fbf
 LeanML/Representation/MLP.lean | 2645 | 94d833865657a08fde3f0f9ea6c0d1c5ec78a666e8f1448232d61e8f2ace29eb
-LeanMLTest/Axioms.lean | 1366 | 7295eaa55c349345ec6f741d6ac9c04e8458af41f1baad0e4d9e4ae0056ac34e
+LeanML/Robustness/Composition.lean | 1818 | a846a1cc5d93ab5df63ca660f297742f499ef7cd6775210bb4341051aec233d8
+LeanML/Robustness/Equilibrium.lean | 1851 | d88d63359ea364bc1e88e2c9206422c4a701581ee1c4745bc7725b43076fdae4
+LeanML/Robustness/Margin.lean | 2604 | 40b88b72df734f203e593f4721d37888ccf5158f25789c66c5a8573bea88c5ca
+LeanML/Robustness/Quantization.lean | 3712 | c32abd4aeca1f63a3cf2a1a2065664597827c48d23feeac49cfea69c90515b43
+LeanMLTest/Advanced.lean | 3024 | 5787d7f70bf75c4610cc15cc3cdb55cba712cba39058779621804dd563e1c4d0
+LeanMLTest/Axioms.lean | 4034 | e926430f37a91c91628fc3c17163d2f61129f0114c83d7325ef0909c2f27d7bd
 LeanMLTest/Basic.lean | 2415 | 7309c9c72e4d9cd65be9621c2bc636b6369c121263308f923791a9d9fe4d2a6f
-README.md | 2973 | 9c11a37b37cbbc8be2643e5b5c5b75a0d07889381b9f2b54b881972e407f2288
-docs/STATUS.md | 5465 | 2c3030ddd462f7b5c19c1987dadb79c60388dabac6530da36cf7dfc674e91fde
-docs/VALIDATION.md | 2603 | 550d7ce41ec2faa3fa7740cd34e42ba783598644e4a5e153b7e57c2b628d3cf5
+README.md | 3280 | 5034265ecfb80ab258f18e2f27eeb2592df43dc06069f3035b86c2a37863a6aa
+docs/STATUS.md | 16420 | 06716d4a89cf54db348c8a40f99fa3db0f24b7fdaee550934360e75ad6d4c75b
+docs/VALIDATION.md | 3201 | e918dc8bb3ee6e982d1690ad1dbe2e12846fbaa2fd09488b3d7b0ddae137ee9f
 lake-manifest.json | 3161 | 04e8088f87f2c2d4c62505d5dbf2549c5d7449f0c43565ea45b9419d8323ac1f
 lakefile.lean | 322 | b261d9dfd07ad7919341b22ef674c4d0c1a8ce212f5f39f35f9820b5c80cd216
 lean-toolchain | 29 | 11c697aebe5b539d74f5069e497a588e7dfab1c4eeb74313f28357e351c55ca3
 scripts/activate.sh | 452 | b799881785e946561063468f6e99e2d7062f95da155917c2257ab49d7943bb18
-scripts/check.sh | 435 | 0bf37248ebb5fb3a7ac00e1d81fedac8cfe5bb760ecc6441ef980a31b9678d6c
+scripts/check.sh | 500 | 0bc85383f3955071634c36580ec8e68545e82c92a708bfa824b84e1ac3dd20b4
 scripts/check_proofs.py | 2123 | 95e63ff688b4e3f7b9809ed07e718eae1a5824320f70530a478cc17003874593
-scripts/export_code.py | 2483 | 452399d4491c637b05952bc12a907413eebb611c4551c795f689f3f5debf6c33
-scripts/verify_legacy.py | 1874 | e7807a3090035d7b27c57630b6aae8cc33e9bee49fc38f1aa99484072ce40b71
+scripts/export_code.py | 2489 | 41cd61a1b17b90a7d19b9496a2376657b2f7297d02c3ba45065e476b254cb2c8
 
 ===== INÍCIO DO ARQUIVO: .github/workflows/lean.yml =====
 name: LeanML formal verification
@@ -73,12 +91,6 @@ jobs:
 
 ===== INÍCIO DO ARQUIVO: .gitignore =====
 .lake/
-# Retain historical sources, omit archived generated files from future commits.
-legacy/.venv/
-legacy/__pycache__/
-legacy/build/
-legacy/*.egg-info/
-legacy/.lake/
 __pycache__/
 *.py[cod]
 ===== FIM DO ARQUIVO: .gitignore =====
@@ -95,7 +107,7 @@ devem manter as hipóteses e a atribuição ao Mathlib claramente documentadas.
 Para cada mudança matemática:
 
 1. Declare domínio, normalização, integrabilidade, suporte e mensurabilidade necessários.
-2. Acrescente uma aplicação concreta ou teste de regressão em `LeanMLTest/Basic.lean`.
+2. Acrescente uma aplicação concreta ou teste de regressão em `LeanMLTest/Basic.lean` ou `LeanMLTest/Advanced.lean`.
 3. Liste os resultados principais em `LeanMLTest/Axioms.lean`.
 4. Execute `bash scripts/check.sh` e atualize `docs/STATUS.md`.
 
@@ -108,40 +120,80 @@ Resultados ainda não demonstrados podem ser definidos como propriedades em `Pro
 com status explícito de especificação. Não crie um teorema que apenas recebe como
 hipótese a conclusão desejada e o anuncie como demonstração do resultado original.
 
-`legacy/` é um arquivo histórico: não importe seus módulos no projeto ativo e não
-reative seus workflows. O escopo ativo é aprendizado de máquina formalizado.
+O escopo ativo é aprendizado de máquina formalizado. Não reintroduza os módulos
+Python/Rust históricos ou seus workflows na árvore ativa.
 ===== FIM DO ARQUIVO: CONTRIBUTING.md =====
 
 ===== INÍCIO DO ARQUIVO: LeanML.lean =====
 module
 
+public import LeanML.GameTheory.Minimax
 public import LeanML.Generative.ELBO
 public import LeanML.Generative.OptimalTransport
 public import LeanML.Generative.SDEConvergence
+public import LeanML.Generative.TransportDuality
+public import LeanML.Generative.Tweedie
+public import LeanML.Information.CramerRao
 public import LeanML.Information.DataProcessing
 public import LeanML.Information.Divergence
 public import LeanML.Information.Shannon
 public import LeanML.LearningTheory.Concentration
 public import LeanML.LearningTheory.Loss
+public import LeanML.LearningTheory.Martingales
 public import LeanML.LearningTheory.PAC
+public import LeanML.LearningTheory.PACBayes
 public import LeanML.LearningTheory.Rademacher
 public import LeanML.LearningTheory.SauerShelah
 public import LeanML.LearningTheory.VCDimension
 public import LeanML.Optimization.Backpropagation
 public import LeanML.Optimization.GradientDescent
+public import LeanML.Optimization.LeastSquares
 public import LeanML.Optimization.Nesterov
+public import LeanML.Optimization.PolyakLojasiewicz
 public import LeanML.Optimization.Smoothness
 public import LeanML.Optimization.Stochastic
+public import LeanML.Privacy.Differential
+public import LeanML.Reinforcement.Bellman
+public import LeanML.Reliability.Brier
 public import LeanML.Representation.Activation
 public import LeanML.Representation.Attention
 public import LeanML.Representation.Convolution
 public import LeanML.Representation.Cybenko
+public import LeanML.Representation.DeepSets
+public import LeanML.Representation.GroupConvolution
+public import LeanML.Representation.Kernels
 public import LeanML.Representation.MLP
-
-@[expose] public section
-
-/-! LeanML: axiomatic foundations of machine learning. -/
+public import LeanML.Robustness.Composition
+public import LeanML.Robustness.Equilibrium
+public import LeanML.Robustness.Margin
+public import LeanML.Robustness.Quantization
 ===== FIM DO ARQUIVO: LeanML.lean =====
+
+===== INÍCIO DO ARQUIVO: LeanML/GameTheory/Minimax.lean =====
+module
+public import Mathlib.Topology.Sion
+public import Mathlib.Analysis.Normed.Module.Basic
+@[expose] public section
+namespace LeanML.GameTheory
+variable {E F : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
+  [NormedAddCommGroup F] [NormedSpace ℝ F]
+
+/-- Sion's minimax theorem on two nonempty compact convex strategy sets.
+This is the saddle-point formulation, reused from Mathlib's proof of Sion.
+Neither a nonconvex GAN nor its training algorithm satisfies these hypotheses automatically.
+-/
+theorem minimax_saddle {X : Set E} {Y : Set F} {payoff : E → F → ℝ}
+    (hneX : X.Nonempty) (hconvX : Convex ℝ X) (hcompactX : IsCompact X)
+    (hneY : Y.Nonempty) (hconvY : Convex ℝ Y) (hcompactY : IsCompact Y)
+    (hlower : ∀ y ∈ Y, LowerSemicontinuousOn (fun x => payoff x y) X)
+    (hconvex : ∀ y ∈ Y, QuasiconvexOn ℝ X (fun x => payoff x y))
+    (hupper : ∀ x ∈ X, UpperSemicontinuousOn (fun y => payoff x y) Y)
+    (hconcave : ∀ x ∈ X, QuasiconcaveOn ℝ Y (fun y => payoff x y)) :
+    ∃ x ∈ X, ∃ y ∈ Y, IsSaddlePointOn X Y payoff x y :=
+  Sion.exists_isSaddlePointOn hneX hconvX hcompactX hlower hconvex
+    hconvY hneY hcompactY hupper hconcave
+end LeanML.GameTheory
+===== FIM DO ARQUIVO: LeanML/GameTheory/Minimax.lean =====
 
 ===== INÍCIO DO ARQUIVO: LeanML/Generative/ELBO.lean =====
 module
@@ -284,6 +336,152 @@ theorem reversePath_involutive {E : Type*} (T : ℝ) (path : ℝ → E) :
   simp [reversePath]
 end LeanML.Generative
 ===== FIM DO ARQUIVO: LeanML/Generative/SDEConvergence.lean =====
+
+===== INÍCIO DO ARQUIVO: LeanML/Generative/TransportDuality.lean =====
+module
+public import LeanML.Generative.OptimalTransport
+public import Mathlib.Topology.MetricSpace.Lipschitz
+public import Mathlib.Tactic.Linarith
+@[expose] public section
+noncomputable section
+open scoped BigOperators
+namespace LeanML.Generative
+open LeanML.Information
+variable {X : Type*} [Fintype X] [PseudoMetricSpace X]
+
+omit [PseudoMetricSpace X] in
+/-- A coupling converts the marginal difference of expectations to a paired expectation. -/
+theorem coupling_expectation_difference (P Q : FiniteDistribution X) (π : Coupling P Q)
+    (f : X → ℝ) :
+    (∑ x, P.mass x*f x)-(∑ y, Q.mass y*f y) = ∑ x, ∑ y, π.mass x y*(f x-f y) := by
+  simp_rw [mul_sub, Finset.sum_sub_distrib]
+  congr 1
+  · apply Finset.sum_congr rfl
+    intro x _
+    rw [← Finset.sum_mul, π.left_marginal]
+  · rw [Finset.sum_comm]
+    apply Finset.sum_congr rfl
+    intro y _
+    rw [← Finset.sum_mul, π.right_marginal]
+
+/-- Weak Kantorovich-Rubinstein duality for every finite coupling. -/
+theorem lipschitz_potential_le_cost (P Q : FiniteDistribution X) (π : Coupling P Q)
+    (f : X → ℝ) (hf : LipschitzWith 1 f) :
+    (∑ x, P.mass x*f x)-(∑ y, Q.mass y*f y) ≤ π.cost (fun x y => dist x y) := by
+  rw [coupling_expectation_difference P Q π f]
+  apply Finset.sum_le_sum
+  intro x _
+  apply Finset.sum_le_sum
+  intro y _
+  apply mul_le_mul_of_nonneg_left _ (π.nonneg x y)
+  have h := hf.dist_le_mul x y
+  have h' : |f x-f y| ≤ dist x y := by simpa only [NNReal.coe_one, one_mul, Real.dist_eq] using h
+  exact (le_abs_self _).trans h'
+
+/-- Every admissible dual potential lower-bounds the finite optimal cost. -/
+theorem lipschitz_potential_le_optimal (P Q : FiniteDistribution X) (f : X → ℝ)
+    (hf : LipschitzWith 1 f) :
+    (∑ x, P.mass x*f x)-(∑ y, Q.mass y*f y) ≤ kantorovichCost P Q (fun x y => dist x y) := by
+  let : Nonempty (Coupling P Q) := ⟨independentCoupling P Q⟩
+  exact le_ciInf fun π => lipschitz_potential_le_cost P Q π f hf
+end LeanML.Generative
+===== FIM DO ARQUIVO: LeanML/Generative/TransportDuality.lean =====
+
+===== INÍCIO DO ARQUIVO: LeanML/Generative/Tweedie.lean =====
+module
+public import Mathlib.Analysis.SpecialFunctions.Log.Deriv
+public import Mathlib.Analysis.Calculus.Deriv.Add
+public import Mathlib.Analysis.Calculus.Deriv.Pow
+public import Mathlib.Tactic.FieldSimp
+public import Mathlib.Tactic.Ring
+public import Mathlib.Tactic.Positivity
+@[expose] public section
+noncomputable section
+open scoped BigOperators
+namespace LeanML.Generative
+variable {I : Type*} [Fintype I] [Nonempty I]
+
+/-- Unnormalized one-dimensional Gaussian mixture components, variance `v`. -/
+def gaussianComponent (weight center : ℝ) (v x : ℝ) : ℝ :=
+  weight*Real.exp (-((x-center)^2)/(2*v))
+
+def mixtureDensity (weight center : I → ℝ) (v x : ℝ) : ℝ :=
+  ∑ i, gaussianComponent (weight i) (center i) v x
+
+def mixtureDerivative (weight center : I → ℝ) (v x : ℝ) : ℝ :=
+  ∑ i, gaussianComponent (weight i) (center i) v x * (-(x-center i)/v)
+
+def posteriorMean (weight center : I → ℝ) (v x : ℝ) : ℝ :=
+  (∑ i, center i*gaussianComponent (weight i) (center i) v x)/mixtureDensity weight center v x
+
+theorem mixtureDensity_pos (weight center : I → ℝ) (v x : ℝ) (hw : ∀ i, 0 < weight i) :
+    0 < mixtureDensity weight center v x :=
+  Finset.sum_pos (fun i _ => mul_pos (hw i) (Real.exp_pos _)) Finset.univ_nonempty
+
+omit [Nonempty I] in
+/-- Differentiate the actual Gaussian density, not an assumed score field. -/
+theorem mixtureDensity_hasDeriv (weight center : I → ℝ) (v x : ℝ) (hv : 0 < v) :
+    HasDerivAt (mixtureDensity weight center v) (mixtureDerivative weight center v x) x := by
+  apply HasDerivAt.fun_sum
+  intro i _
+  change HasDerivAt (fun z => weight i*Real.exp (-((z-center i)^2)/(2*v)))
+    (weight i*Real.exp (-((x-center i)^2)/(2*v)) * (-(x-center i)/v)) x
+  have hd : HasDerivAt (fun z : ℝ => -((z-center i)^2)/(2*v)) (-(x-center i)/v) x := by
+    convert (((hasDerivAt_id' x).sub_const (center i)).fun_pow 2).fun_neg.div_const (2*v) using 1
+    field_simp [ne_of_gt hv]
+    ring
+  convert hd.exp.const_mul (weight i) using 1
+  ring
+
+/-- The mixture's logarithmic score follows from its certified derivative. -/
+theorem mixtureLog_hasDeriv (weight center : I → ℝ) (v x : ℝ)
+    (hv : 0 < v) (hw : ∀ i, 0 < weight i) :
+    HasDerivAt (fun z => Real.log (mixtureDensity weight center v z))
+      (mixtureDerivative weight center v x/mixtureDensity weight center v x) x :=
+  (mixtureDensity_hasDeriv weight center v x hv).log (ne_of_gt (mixtureDensity_pos weight center v x hw))
+
+/-- Tweedie's identity for a finite discrete prior with scalar Gaussian observation noise. -/
+theorem tweedie_finiteGaussian (weight center : I → ℝ) (v x : ℝ)
+    (hv : 0 < v) (hw : ∀ i, 0 < weight i) :
+    posteriorMean weight center v x = x+v*deriv (fun z => Real.log (mixtureDensity weight center v z)) x := by
+  rw [(mixtureLog_hasDeriv weight center v x hv hw).deriv]
+  have hs : mixtureDerivative weight center v x =
+      -(1/v)*(x*mixtureDensity weight center v x-
+        ∑ i, center i*gaussianComponent (weight i) (center i) v x) := by
+    unfold mixtureDerivative mixtureDensity
+    rw [Finset.mul_sum, ← Finset.sum_sub_distrib, Finset.mul_sum]
+    apply Finset.sum_congr rfl
+    intro i _
+    ring
+  rw [hs]
+  unfold posteriorMean
+  field_simp [ne_of_gt hv, ne_of_gt (mixtureDensity_pos weight center v x hw)]
+  ring
+end LeanML.Generative
+===== FIM DO ARQUIVO: LeanML/Generative/Tweedie.lean =====
+
+===== INÍCIO DO ARQUIVO: LeanML/Information/CramerRao.lean =====
+module
+public import Mathlib.Analysis.InnerProductSpace.Basic
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.NormNum
+@[expose] public section
+namespace LeanML.Information
+variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+
+/-- Hilbert-space information inequality. In a statistical instantiation `error`
+and `score` are centered L² variables and the inner identity follows from regularity.
+-/
+theorem information_inequality (error score : E) (hscore : 0 < ‖score‖^2)
+    (hunbiased : inner ℝ error score = 1) : 1/‖score‖^2 ≤ ‖error‖^2 := by
+  have h := abs_real_inner_le_norm error score
+  rw [hunbiased, abs_one] at h
+  have hsq := (sq_le_sq₀ (by norm_num : (0:ℝ) ≤ 1)
+    (mul_nonneg (norm_nonneg error) (norm_nonneg score))).mpr h
+  apply (div_le_iff₀ hscore).mpr
+  nlinarith
+end LeanML.Information
+===== FIM DO ARQUIVO: LeanML/Information/CramerRao.lean =====
 
 ===== INÍCIO DO ARQUIVO: LeanML/Information/DataProcessing.lean =====
 module
@@ -596,6 +794,35 @@ theorem finiteClass_erm_bound (μ : Measure Ω) (risk : H → ℝ)
 end LeanML.LearningTheory
 ===== FIM DO ARQUIVO: LeanML/LearningTheory/Loss.lean =====
 
+===== INÍCIO DO ARQUIVO: LeanML/LearningTheory/Martingales.lean =====
+module
+public import Mathlib.Probability.Moments.SubGaussian
+public import Mathlib.Probability.Moments.Variance
+@[expose] public section
+noncomputable section
+open MeasureTheory ProbabilityTheory
+open scoped NNReal ENNReal BigOperators
+namespace LeanML.LearningTheory
+variable {Ω : Type*} {mΩ : MeasurableSpace Ω} {μ : Measure Ω}
+
+/-- Azuma-Hoeffding under explicit conditional sub-Gaussian hypotheses. -/
+theorem azuma_hoeffding [StandardBorelSpace Ω] [IsZeroOrProbabilityMeasure μ]
+    {Y : ℕ → Ω → ℝ} {c : ℕ → ℝ≥0} {ℱ : Filtration ℕ mΩ}
+    (hadapted : StronglyAdapted ℱ Y) (hzero : HasSubgaussianMGF (Y 0) (c 0) μ) (n : ℕ)
+    (hcond : ∀ i < n-1, HasCondSubgaussianMGF (ℱ i) (ℱ.le i) (Y (i+1)) (c (i+1)) μ)
+    {ε : ℝ} (hε : 0 ≤ ε) :
+    μ.real {ω | ε ≤ ∑ i ∈ Finset.range n, Y i ω} ≤
+      Real.exp (-ε^2/(2*∑ i ∈ Finset.range n, c i)) :=
+  ProbabilityTheory.measure_sum_ge_le_of_hasCondSubgaussianMGF hadapted hzero n hcond hε
+
+/-- Chebyshev's inequality retains the finite-second-moment prerequisite. -/
+theorem chebyshev [IsFiniteMeasure μ] {X : Ω → ℝ} (hX : MemLp X 2 μ)
+    {ε : ℝ} (hε : 0 < ε) :
+    μ {ω | ε ≤ |X ω-∫ z, X z ∂μ|} ≤ ENNReal.ofReal (variance X μ/ε^2) :=
+  ProbabilityTheory.meas_ge_le_variance_div_sq hX hε
+end LeanML.LearningTheory
+===== FIM DO ARQUIVO: LeanML/LearningTheory/Martingales.lean =====
+
 ===== INÍCIO DO ARQUIVO: LeanML/LearningTheory/PAC.lean =====
 module
 
@@ -620,6 +847,47 @@ def PACGuarantee (sampleLaw : ∀ n : ℕ, Measure (Fin n → X))
     (sampleLaw n) {s | ε < risk (learner n s)} ≤ ENNReal.ofReal δ
 end LeanML.LearningTheory
 ===== FIM DO ARQUIVO: LeanML/LearningTheory/PAC.lean =====
+
+===== INÍCIO DO ARQUIVO: LeanML/LearningTheory/PACBayes.lean =====
+module
+public import LeanML.Generative.ELBO
+@[expose] public section
+noncomputable section
+open scoped BigOperators
+namespace LeanML.LearningTheory
+open LeanML.Information LeanML.Generative
+variable {H : Type*} [Fintype H]
+
+/-- Finite KL on strictly positive probability vectors; supports are explicit in theorems. -/
+def finiteKL (q p : FiniteDistribution H) : ℝ := ∑ h, q.mass h*Real.log (q.mass h/p.mass h)
+
+/-- The change-of-measure variational inequality used in PAC-Bayesian arguments.
+This theorem alone is not a high-probability PAC-Bayes sample bound.
+-/
+theorem changeOfMeasure (q p : FiniteDistribution H) (φ : H → ℝ)
+    (hq : ∀ h, 0 < q.mass h) (hp : ∀ h, 0 < p.mass h) :
+    (∑ h, q.mass h*φ h) ≤ finiteKL q p+Real.log (∑ h, p.mass h*Real.exp (φ h)) := by
+  have hj : ∀ h, 0 < p.mass h*Real.exp (φ h) := fun h => mul_pos (hp h) (Real.exp_pos _)
+  have bound := finiteELBO_le_logEvidence (fun h => p.mass h*Real.exp (φ h)) q hj hq
+  have he : finiteELBO (fun h => p.mass h*Real.exp (φ h)) q =
+      (∑ h, q.mass h*φ h)-finiteKL q p := by
+    unfold finiteELBO finiteKL
+    rw [← Finset.sum_sub_distrib]
+    apply Finset.sum_congr rfl
+    intro h _
+    rw [Real.log_div (ne_of_gt (hj h)) (ne_of_gt (hq h)),
+      Real.log_mul (ne_of_gt (hp h)) (Real.exp_ne_zero _), Real.log_exp,
+      Real.log_div (ne_of_gt (hq h)) (ne_of_gt (hp h))]
+    ring
+  rw [he] at bound
+  linarith
+
+/-- Finite Gibbs inequality is a corollary of the same variational principle. -/
+theorem finiteKL_nonneg (q p : FiniteDistribution H)
+    (hq : ∀ h, 0 < q.mass h) (hp : ∀ h, 0 < p.mass h) : 0 ≤ finiteKL q p := by
+  simpa [p.total] using changeOfMeasure q p (fun _ => 0) hq hp
+end LeanML.LearningTheory
+===== FIM DO ARQUIVO: LeanML/LearningTheory/PACBayes.lean =====
 
 ===== INÍCIO DO ARQUIVO: LeanML/LearningTheory/Rademacher.lean =====
 module
@@ -991,6 +1259,44 @@ theorem gradientDescent_convex_rate {f : E → ℝ} {g : E → E} {L η : ℝ}
 end LeanML.Optimization
 ===== FIM DO ARQUIVO: LeanML/Optimization/GradientDescent.lean =====
 
+===== INÍCIO DO ARQUIVO: LeanML/Optimization/LeastSquares.lean =====
+module
+public import Mathlib.Analysis.InnerProductSpace.Adjoint
+public import LeanML.Optimization.GradientDescent
+@[expose] public section
+noncomputable section
+namespace LeanML.Optimization
+variable {E F : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [CompleteSpace E]
+  [NormedAddCommGroup F] [InnerProductSpace ℝ F] [CompleteSpace F]
+
+/-- A feasible point in the adjoint range is the minimum-norm interpolant. -/
+theorem adjoint_interpolant_pythagoras (A : E →L[ℝ] F) (u y : F)
+    (hu : A (A.adjoint u) = y) (v : E) (hv : A v = y) :
+    ‖v‖^2 = ‖A.adjoint u‖^2+‖v-A.adjoint u‖^2 := by
+  have hzero : A (v-A.adjoint u) = 0 := by rw [map_sub, hv, hu, sub_self]
+  have hi : inner ℝ (A.adjoint u) (v-A.adjoint u) = 0 := by
+    rw [A.adjoint_inner_left, hzero, inner_zero_right]
+  have hn := norm_add_sq_real (A.adjoint u) (v-A.adjoint u)
+  have he : A.adjoint u+(v-A.adjoint u) = v := by abel
+  rw [he, hi] at hn
+  nlinarith
+
+theorem adjoint_interpolant_minimum_norm (A : E →L[ℝ] F) (u y : F)
+    (hu : A (A.adjoint u) = y) (v : E) (hv : A v = y) : ‖A.adjoint u‖ ≤ ‖v‖ := by
+  have h := adjoint_interpolant_pythagoras A u y hu v hv
+  exact (sq_le_sq₀ (norm_nonneg _) (norm_nonneg _)).mp (by nlinarith [sq_nonneg ‖v-A.adjoint u‖])
+
+/-- Least-squares gradients belong to the adjoint range. -/
+def leastSquaresGradient (A : E →L[ℝ] F) (y : F) (w : E) : E := A.adjoint (A w-y)
+
+/-- Updates preserve the adjoint range, the geometric source of minimum-norm bias. -/
+theorem leastSquares_range_step (A : E →L[ℝ] F) (y : F) (η : ℝ) (u : F) :
+    A.adjoint u-η • leastSquaresGradient A y (A.adjoint u) =
+      A.adjoint (u-η • (A (A.adjoint u)-y)) := by
+  simp only [leastSquaresGradient, map_sub, map_smul]
+end LeanML.Optimization
+===== FIM DO ARQUIVO: LeanML/Optimization/LeastSquares.lean =====
+
 ===== INÍCIO DO ARQUIVO: LeanML/Optimization/Nesterov.lean =====
 module
 
@@ -1018,6 +1324,55 @@ theorem nesterovStep_zero (g : E → E) (η : ℝ) (x previous : E) :
     nesterovStep g η 0 x previous = x-η • g x := by simp [nesterovStep]
 end LeanML.Optimization
 ===== FIM DO ARQUIVO: LeanML/Optimization/Nesterov.lean =====
+
+===== INÍCIO DO ARQUIVO: LeanML/Optimization/PolyakLojasiewicz.lean =====
+module
+public import LeanML.Optimization.GradientDescent
+@[expose] public section
+noncomputable section
+namespace LeanML.Optimization
+variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [CompleteSpace E]
+
+/-- PL concerns a genuine gradient supplied by `IsLSmooth`; convexity is not assumed. -/
+structure PolyakLojasiewicz (f : E → ℝ) (g : E → E) (μ optimum : ℝ) : Prop where
+  constant_pos : 0 < μ
+  lower_bound : ∀ x, optimum ≤ f x
+  dominance : ∀ x, 2*μ*(f x-optimum) ≤ ‖g x‖^2
+
+omit [CompleteSpace E] [InnerProductSpace ℝ E] in
+/-- Under PL, stationary points attain the stated global optimum. -/
+theorem PolyakLojasiewicz.stationary_global {f : E → ℝ} {g : E → E} {μ optimum : ℝ}
+    (h : PolyakLojasiewicz f g μ optimum) (x : E) (hx : g x = 0) : f x = optimum := by
+  have hd := h.dominance x
+  rw [hx, norm_zero, zero_pow (by decide : 2 ≠ 0)] at hd
+  nlinarith [h.lower_bound x, h.constant_pos]
+
+/-- Linear convergence of loss values under PL, with no convexity hypothesis. -/
+theorem pl_gradientDescent_rate {f : E → ℝ} {g : E → E} {L μ optimum : ℝ}
+    (hf : IsLSmooth f g L) (hpl : PolyakLojasiewicz f g μ optimum) (hμL : μ ≤ L)
+    (x₀ : E) (k : ℕ) :
+    f (gradientIterate g (1/L) x₀ k)-optimum ≤ (1-μ/L)^k*(f x₀-optimum) := by
+  have hL := hf.constant_pos
+  have hfactor : 0 ≤ 1-μ/L := sub_nonneg.mpr ((div_le_one hf.constant_pos).mpr hμL)
+  have hstep : ∀ x, f (gradientStep g (1/L) x)-optimum ≤ (1-μ/L)*(f x-optimum) := by
+    intro x
+    have hd := gradient_descent_step_decreases hf x
+    have hp := mul_le_mul_of_nonneg_left (hpl.dominance x)
+      (show 0 ≤ 1/(2*L) by positivity)
+    have he : (1/(2*L))*(2*μ*(f x-optimum)) = (μ/L)*(f x-optimum) := by ring
+    rw [he] at hp
+    dsimp [gradientStep]
+    nlinarith
+  induction k with
+  | zero => simp [gradientIterate]
+  | succ k ih =>
+    calc
+      f (gradientIterate g (1/L) x₀ (k+1))-optimum ≤
+          (1-μ/L)*(f (gradientIterate g (1/L) x₀ k)-optimum) := hstep _
+      _ ≤ (1-μ/L)*((1-μ/L)^k*(f x₀-optimum)) := mul_le_mul_of_nonneg_left ih hfactor
+      _ = (1-μ/L)^(k+1)*(f x₀-optimum) := by ring
+end LeanML.Optimization
+===== FIM DO ARQUIVO: LeanML/Optimization/PolyakLojasiewicz.lean =====
 
 ===== INÍCIO DO ARQUIVO: LeanML/Optimization/Smoothness.lean =====
 module
@@ -1137,6 +1492,180 @@ theorem stochasticStep_deterministic (g : E → E) (η : ℝ) (x : E) (ω : Ω) 
     stochasticStep (fun x _ => g x) η x ω = x-η • g x := rfl
 end LeanML.Optimization
 ===== FIM DO ARQUIVO: LeanML/Optimization/Stochastic.lean =====
+
+===== INÍCIO DO ARQUIVO: LeanML/Privacy/Differential.lean =====
+module
+public import Mathlib.MeasureTheory.Measure.ProbabilityMeasure
+public import Mathlib.MeasureTheory.Measure.Map
+public import Mathlib.Analysis.SpecialFunctions.Exp
+@[expose] public section
+noncomputable section
+open MeasureTheory
+open scoped ENNReal
+namespace LeanML.Privacy
+variable {D X Y : Type*} [MeasurableSpace X] [MeasurableSpace Y]
+
+/-- Eventwise approximate privacy, retaining extended probabilities. -/
+def PrivatePair (μ ν : Measure X) (ε δ : ℝ) : Prop :=
+  ∀ A, MeasurableSet A → μ A ≤ ENNReal.ofReal (Real.exp ε)*ν A+ENNReal.ofReal δ
+
+def DifferentiallyPrivate (adjacent : D → D → Prop) (M : D → ProbabilityMeasure X)
+    (ε δ : ℝ) : Prop := 0 ≤ ε ∧ 0 ≤ δ ∧
+  ∀ d d', adjacent d d' → PrivatePair (M d).toMeasure (M d').toMeasure ε δ
+
+/-- Measurable postprocessing preserves the privacy parameters. -/
+theorem PrivatePair.postprocess {μ ν : Measure X} {ε δ : ℝ} (h : PrivatePair μ ν ε δ)
+    (f : X → Y) (hf : Measurable f) : PrivatePair (μ.map f) (ν.map f) ε δ := by
+  intro A hA
+  rw [Measure.map_apply hf hA, Measure.map_apply hf hA]
+  exact h (f ⁻¹' A) (hf hA)
+
+theorem DifferentiallyPrivate.postprocess {adjacent : D → D → Prop}
+    {M : D → ProbabilityMeasure X} {ε δ : ℝ} (h : DifferentiallyPrivate adjacent M ε δ)
+    (f : X → Y) (hf : Measurable f) :
+    DifferentiallyPrivate adjacent (fun d => (M d).map f) ε δ := by
+  refine ⟨h.1, h.2.1, ?_⟩
+  intro d d' hadj
+  simpa only [ProbabilityMeasure.toMeasure_map] using (h.2.2 d d' hadj).postprocess f hf
+end LeanML.Privacy
+===== FIM DO ARQUIVO: LeanML/Privacy/Differential.lean =====
+
+===== INÍCIO DO ARQUIVO: LeanML/Reinforcement/Bellman.lean =====
+module
+public import LeanML.Information.Shannon
+public import Mathlib.Topology.MetricSpace.Contracting
+public import Mathlib.Data.Finset.Max
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.Ring
+@[expose] public section
+noncomputable section
+open scoped BigOperators NNReal
+namespace LeanML.Reinforcement
+open LeanML.Information
+variable {S A : Type*} [Fintype S] [Fintype A] [Nonempty A]
+
+/-- A finite discounted MDP with normalized transition probabilities. -/
+structure FiniteMDP (S A : Type*) [Fintype S] where
+  reward : S → A → ℝ
+  transition : S → A → FiniteDistribution S
+  discount : ℝ≥0
+  discount_lt_one : discount < 1
+
+def actionValue (M : FiniteMDP S A) (V : S → ℝ) (s : S) (a : A) : ℝ :=
+  M.reward s a+(M.discount:ℝ)*(∑ t, (M.transition s a).mass t*V t)
+
+def bellman (M : FiniteMDP S A) (V : S → ℝ) (s : S) : ℝ :=
+  Finset.univ.sup' Finset.univ_nonempty (actionValue M V s)
+
+/-- Finite maxima cannot amplify a uniform coordinatewise perturbation. -/
+theorem max_abs_sub_le (f g : A → ℝ) (C : ℝ) (h : ∀ a, |f a-g a| ≤ C) :
+    |Finset.univ.sup' Finset.univ_nonempty f-Finset.univ.sup' Finset.univ_nonempty g| ≤ C := by
+  apply abs_le.mpr
+  have hfg : Finset.univ.sup' Finset.univ_nonempty f ≤
+      Finset.univ.sup' Finset.univ_nonempty g+C := by
+    apply Finset.sup'_le
+    intro a _
+    have h₁ := (abs_le.mp (h a)).2
+    have h₂ := Finset.le_sup' g (Finset.mem_univ a)
+    linarith
+  have hgf : Finset.univ.sup' Finset.univ_nonempty g ≤
+      Finset.univ.sup' Finset.univ_nonempty f+C := by
+    apply Finset.sup'_le
+    intro a _
+    have h₁ := (abs_le.mp (h a)).1
+    have h₂ := Finset.le_sup' f (Finset.mem_univ a)
+    linarith
+  constructor <;> linarith
+
+/-- Averaging by a probability vector is nonexpansive in the supremum norm. -/
+theorem transition_nonexpansive (p : FiniteDistribution S) (U V : S → ℝ) :
+    |(∑ t, p.mass t*U t)-(∑ t, p.mass t*V t)| ≤ dist U V := by
+  rw [← Finset.sum_sub_distrib]
+  have he : ∀ t, p.mass t*U t-p.mass t*V t = p.mass t*(U t-V t) := by intro t; ring
+  simp_rw [he]
+  calc
+    |∑ t, p.mass t*(U t-V t)| ≤ ∑ t, |p.mass t*(U t-V t)| := Finset.abs_sum_le_sum_abs _ _
+    _ ≤ ∑ t, p.mass t*dist U V := by
+      apply Finset.sum_le_sum
+      intro t _
+      rw [abs_mul, abs_of_nonneg (p.nonneg t)]
+      apply mul_le_mul_of_nonneg_left _ (p.nonneg t)
+      simpa only [Real.dist_eq] using dist_le_pi_dist U V t
+    _ = dist U V := by rw [← Finset.sum_mul, p.total, one_mul]
+
+/-- Bellman optimality is a strict contraction for discount < 1. -/
+theorem bellman_contracting (M : FiniteMDP S A) : ContractingWith M.discount (bellman M) := by
+  refine ⟨M.discount_lt_one, LipschitzWith.of_dist_le_mul ?_⟩
+  intro U V
+  apply (dist_pi_le_iff (mul_nonneg M.discount.coe_nonneg dist_nonneg)).mpr
+  intro s
+  rw [Real.dist_eq]
+  apply max_abs_sub_le
+  intro a
+  have h := mul_le_mul_of_nonneg_left (transition_nonexpansive (M.transition s a) U V)
+    M.discount.coe_nonneg
+  dsimp only [actionValue]
+  simpa only [add_sub_add_left_eq_sub, ← mul_sub, abs_mul, abs_of_nonneg M.discount.coe_nonneg] using h
+
+/-- The optimality operator has one and only one value-function fixed point. -/
+theorem bellman_exists_unique (M : FiniteMDP S A) : ∃! V, bellman M V = V := by
+  let h := bellman_contracting M
+  exact ⟨ContractingWith.fixedPoint _ h, h.fixedPoint_isFixedPt, fun _ hv => h.fixedPoint_unique hv⟩
+
+/-- Value iteration converges from every finite initial value function. -/
+theorem valueIteration_converges (M : FiniteMDP S A) (V₀ : S → ℝ) :
+    Filter.Tendsto (fun n => (bellman M)^[n] V₀) Filter.atTop
+      (nhds (ContractingWith.fixedPoint (bellman M) (bellman_contracting M))) :=
+  (bellman_contracting M).tendsto_iterate_fixedPoint V₀
+end LeanML.Reinforcement
+===== FIM DO ARQUIVO: LeanML/Reinforcement/Bellman.lean =====
+
+===== INÍCIO DO ARQUIVO: LeanML/Reliability/Brier.lean =====
+module
+public import LeanML.Information.Shannon
+public import Mathlib.Tactic.Ring
+@[expose] public section
+noncomputable section
+open scoped BigOperators
+namespace LeanML.Reliability
+open LeanML.Information
+variable {G : Type*} [Fintype G]
+
+def meanFrequency (weights : FiniteDistribution G) (frequency : G → ℝ) : ℝ :=
+  ∑ g, weights.mass g*frequency g
+
+def groupedBrier (weights : FiniteDistribution G) (forecast frequency : G → ℝ) : ℝ :=
+  ∑ g, weights.mass g*(frequency g*(forecast g-1)^2+(1-frequency g)*(forecast g)^2)
+
+def reliability (weights : FiniteDistribution G) (forecast frequency : G → ℝ) : ℝ :=
+  ∑ g, weights.mass g*(forecast g-frequency g)^2
+
+def resolution (weights : FiniteDistribution G) (frequency : G → ℝ) : ℝ :=
+  ∑ g, weights.mass g*(frequency g-meanFrequency weights frequency)^2
+
+/-- Exact finite-group calibration/resolution/uncertainty decomposition.
+The identity is algebraic; interpreting frequencies as probabilities additionally
+requires that they belong to [0,1]. It does not assume forecasts are calibrated.
+-/
+theorem brier_decomposition (weights : FiniteDistribution G) (forecast frequency : G → ℝ) :
+    groupedBrier weights forecast frequency =
+      meanFrequency weights frequency*(1-meanFrequency weights frequency)-
+      resolution weights frequency+reliability weights forecast frequency := by
+  let m := meanFrequency weights frequency
+  have hp : ∀ g, weights.mass g*(frequency g*(forecast g-1)^2+(1-frequency g)*(forecast g)^2) =
+      weights.mass g*(forecast g-frequency g)^2-weights.mass g*(frequency g-m)^2+
+      weights.mass g*frequency g-2*m*(weights.mass g*frequency g)+m^2*weights.mass g := by
+    intro g
+    ring
+  unfold groupedBrier
+  simp_rw [hp]
+  simp only [Finset.sum_add_distrib, Finset.sum_sub_distrib, ← Finset.mul_sum]
+  rw [weights.total]
+  change reliability weights forecast frequency-resolution weights frequency+
+    m-2*m*m+m^2*1 = m*(1-m)-resolution weights frequency+reliability weights forecast frequency
+  ring
+end LeanML.Reliability
+===== FIM DO ARQUIVO: LeanML/Reliability/Brier.lean =====
 
 ===== INÍCIO DO ARQUIVO: LeanML/Representation/Activation.lean =====
 module
@@ -1315,6 +1844,123 @@ theorem approximation_restrict {input : ℕ} {K S : Set (Fin input → ℝ)} {σ
 end LeanML.Representation
 ===== FIM DO ARQUIVO: LeanML/Representation/Cybenko.lean =====
 
+===== INÍCIO DO ARQUIVO: LeanML/Representation/DeepSets.lean =====
+module
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+@[expose] public section
+noncomputable section
+open scoped BigOperators
+namespace LeanML.Representation
+variable {I X E Y : Type*} [Fintype I] [AddCommMonoid E]
+
+/-- Sum aggregation followed by an arbitrary readout. -/
+def deepSet (φ : X → E) (ρ : E → Y) (sample : I → X) : Y := ρ (∑ i, φ (sample i))
+
+/-- The forward invariance direction holds without countability or continuity restrictions. -/
+theorem deepSet_permute (φ : X → E) (ρ : E → Y) (sample : I → X) (p : Equiv.Perm I) :
+    deepSet φ ρ (sample ∘ p) = deepSet φ ρ sample := by
+  unfold deepSet
+  congr 1
+  exact Equiv.sum_comp p (fun i => φ (sample i))
+end LeanML.Representation
+===== FIM DO ARQUIVO: LeanML/Representation/DeepSets.lean =====
+
+===== INÍCIO DO ARQUIVO: LeanML/Representation/GroupConvolution.lean =====
+module
+public import Mathlib.Algebra.Group.Equiv.Basic
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Basic.Real.Basic
+public import Mathlib.Algebra.BigOperators.Pi
+public import Mathlib.Algebra.Module.LinearMap.Basic
+@[expose] public section
+noncomputable section
+open scoped BigOperators
+namespace LeanML.Representation
+variable {G : Type*} [Group G] [Fintype G]
+
+def leftTranslate (a : G) (f : G → ℝ) (x : G) : ℝ := f (a⁻¹*x)
+
+/-- Finite-group convolution with the signal in the first factor. -/
+def groupConvolution (f k : G → ℝ) (x : G) : ℝ := ∑ y, f y*k (y⁻¹*x)
+
+/-- Noncommutative finite-group equivariance follows by Haar/counting reindexing. -/
+theorem groupConvolution_equivariant (a : G) (f k : G → ℝ) :
+    groupConvolution (leftTranslate a f) k = leftTranslate a (groupConvolution f k) := by
+  funext x
+  unfold groupConvolution leftTranslate
+  rw [← Equiv.sum_comp (Equiv.mulLeft a) (fun y => f (a⁻¹*y)*k (y⁻¹*x))]
+  simp only [Equiv.coe_mulLeft, inv_mul_cancel_left, mul_inv_rev, mul_assoc]
+end LeanML.Representation
+
+namespace LeanML.Representation
+variable {G : Type*} [Group G] [Fintype G]
+
+noncomputable def identitySpike : G → ℝ := by
+  classical
+  exact fun g => if g=1 then 1 else 0
+
+/-- Finite-group classification: every linear translation-equivariant operator is a convolution. -/
+theorem equivariant_linear_is_convolution (T : (G → ℝ) →ₗ[ℝ] (G → ℝ))
+    (hT : ∀ a f, T (leftTranslate a f) = leftTranslate a (T f)) :
+    ∃ k : G → ℝ, ∀ f, T f = groupConvolution f k := by
+  classical
+  refine ⟨T identitySpike, ?_⟩
+  intro f
+  have hf : f = ∑ g : G, f g • leftTranslate g (identitySpike : G → ℝ) := by
+    funext x
+    simp [leftTranslate, identitySpike, inv_mul_eq_one, eq_comm]
+  funext x
+  calc
+    T f x = T (∑ g : G, f g • leftTranslate g (identitySpike : G → ℝ)) x := congrArg (fun h => T h x) hf
+    _ = ∑ g, f g*T (leftTranslate g (identitySpike : G → ℝ)) x := by
+      simp only [map_sum, map_smul, Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
+    _ = groupConvolution f (T identitySpike) x := by
+      unfold groupConvolution
+      apply Finset.sum_congr rfl
+      intro g _
+      rw [hT]
+      rfl
+end LeanML.Representation
+===== FIM DO ARQUIVO: LeanML/Representation/GroupConvolution.lean =====
+
+===== INÍCIO DO ARQUIVO: LeanML/Representation/Kernels.lean =====
+module
+public import Mathlib.Analysis.InnerProductSpace.Basic
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Tactic.Ring
+@[expose] public section
+noncomputable section
+open scoped BigOperators
+namespace LeanML.Representation
+variable {X E I : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [Fintype I]
+
+/-- Finite-feature kernels include finite-width neural tangent kernels. -/
+def featureKernel (features : X → E) (x y : X) : ℝ := inner ℝ (features x) (features y)
+
+theorem featureKernel_symmetric (features : X → E) (x y : X) :
+    featureKernel features x y = featureKernel features y x := real_inner_comm _ _
+
+/-- The Gram quadratic form is exactly a squared Hilbert norm. -/
+theorem featureKernel_quadratic (features : X → E) (sample : I → X) (c : I → ℝ) :
+    (∑ i, ∑ j, c i*c j*featureKernel features (sample i) (sample j)) =
+      ‖∑ i, c i • features (sample i)‖^2 := by
+  rw [← real_inner_self_eq_norm_sq]
+  simp only [sum_inner, inner_sum, inner_smul_left, inner_smul_right, featureKernel]
+  apply Finset.sum_congr rfl
+  intro i _
+  rw [Finset.mul_sum]
+  apply Finset.sum_congr rfl
+  intro j _
+  simp [real_inner_comm, mul_assoc]
+
+/-- A finite NTK is positive semidefinite for every parameter feature map. -/
+theorem finiteNTK_psd (features : X → E) (sample : I → X) (c : I → ℝ) :
+    0 ≤ ∑ i, ∑ j, c i*c j*featureKernel features (sample i) (sample j) := by
+  rw [featureKernel_quadratic]
+  exact sq_nonneg _
+end LeanML.Representation
+===== FIM DO ARQUIVO: LeanML/Representation/Kernels.lean =====
+
 ===== INÍCIO DO ARQUIVO: LeanML/Representation/MLP.lean =====
 module
 
@@ -1382,6 +2028,298 @@ theorem MLP.continuous_eval {input output : ℕ} (net : MLP input output)
 end LeanML.Representation
 ===== FIM DO ARQUIVO: LeanML/Representation/MLP.lean =====
 
+===== INÍCIO DO ARQUIVO: LeanML/Robustness/Composition.lean =====
+module
+public import Mathlib.Topology.MetricSpace.Lipschitz
+public import LeanML.Representation.Activation
+@[expose] public section
+open scoped NNReal
+noncomputable section
+namespace LeanML.Robustness
+variable {X Y Z : Type*} [PseudoMetricSpace X] [PseudoMetricSpace Y] [PseudoMetricSpace Z]
+
+/-- A map together with its certified global Lipschitz bound. -/
+structure LipschitzLayer (X Y : Type*) [PseudoMetricSpace X] [PseudoMetricSpace Y] where
+  eval : X → Y
+  bound : ℝ≥0
+  certified : LipschitzWith bound eval
+
+def LipschitzLayer.comp (second : LipschitzLayer Y Z) (first : LipschitzLayer X Y) :
+    LipschitzLayer X Z where
+  eval := second.eval ∘ first.eval
+  bound := second.bound * first.bound
+  certified := second.certified.comp first.certified
+
+def evaluateLayers : List (LipschitzLayer X X) → X → X
+  | [] => id
+  | layer :: rest => evaluateLayers rest ∘ layer.eval
+
+def layerProduct : List (LipschitzLayer X X) → ℝ≥0
+  | [] => 1
+  | layer :: rest => layerProduct rest * layer.bound
+
+/-- Depth multiplies the certified layer constants. -/
+theorem network_lipschitz (layers : List (LipschitzLayer X X)) :
+    LipschitzWith (layerProduct layers) (evaluateLayers layers) := by
+  induction layers with
+  | nil => exact LipschitzWith.id
+  | cons layer rest ih => exact ih.comp layer.certified
+
+/-- A nonexpansive network cannot increase metric perturbations. -/
+theorem perturbation_nonexpansive (layers : List (LipschitzLayer X X))
+    (h : layerProduct layers ≤ 1) (x y : X) :
+    dist (evaluateLayers layers x) (evaluateLayers layers y) ≤ dist x y := by
+  have hb := (network_lipschitz layers).dist_le_mul x y
+  have hreal : (layerProduct layers : ℝ) ≤ 1 := by exact_mod_cast h
+  exact hb.trans (by simpa using mul_le_mul_of_nonneg_right hreal dist_nonneg)
+end LeanML.Robustness
+===== FIM DO ARQUIVO: LeanML/Robustness/Composition.lean =====
+
+===== INÍCIO DO ARQUIVO: LeanML/Robustness/Equilibrium.lean =====
+module
+public import Mathlib.Topology.MetricSpace.Contracting
+public import Mathlib.Analysis.Normed.Operator.Basic
+@[expose] public section
+open scoped NNReal
+noncomputable section
+namespace LeanML.Robustness
+variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [CompleteSpace E]
+
+/-- DEQ update; the activation's Lipschitz hypothesis is indispensable. -/
+def deqUpdate (σ : E → E) (W : E →L[ℝ] E) (x : E) (h : E) : E := σ (W h+x)
+
+omit [CompleteSpace E] in
+theorem deq_contracting (σ : E → E) (W : E →L[ℝ] E) (x : E)
+    (hσ : LipschitzWith 1 σ) (hW : ‖W‖₊ < 1) :
+    ContractingWith ‖W‖₊ (deqUpdate σ W x) := by
+  refine ⟨hW, ?_⟩
+  have hw : LipschitzWith ‖W‖₊ (W : E → E) :=
+    ContinuousLinearMap.lipschitzWith_of_opNorm_le (f := W) le_rfl
+  apply LipschitzWith.of_dist_le_mul
+  intro a b
+  dsimp only [deqUpdate]
+  have hs := hσ.dist_le_mul (W a+x) (W b+x)
+  simp only [NNReal.coe_one, one_mul, dist_add_right] at hs
+  exact hs.trans (hw.dist_le_mul a b)
+
+/-- Banach gives a unique equilibrium on the complete hidden-state space. -/
+theorem deq_exists_unique (σ : E → E) (W : E →L[ℝ] E) (x : E)
+    (hσ : LipschitzWith 1 σ) (hW : ‖W‖₊ < 1) : ∃! h, deqUpdate σ W x h = h := by
+  let hc := deq_contracting σ W x hσ hW
+  exact ⟨ContractingWith.fixedPoint _ hc, hc.fixedPoint_isFixedPt, fun _ hz => hc.fixedPoint_unique hz⟩
+
+/-- Picard iteration converges to that equilibrium. -/
+theorem deq_iterates_converge (σ : E → E) (W : E →L[ℝ] E) (x start : E)
+    (hσ : LipschitzWith 1 σ) (hW : ‖W‖₊ < 1) :
+    Filter.Tendsto (fun n => (deqUpdate σ W x)^[n] start) Filter.atTop
+      (nhds (ContractingWith.fixedPoint (deqUpdate σ W x) (deq_contracting σ W x hσ hW))) :=
+  (deq_contracting σ W x hσ hW).tendsto_iterate_fixedPoint start
+end LeanML.Robustness
+===== FIM DO ARQUIVO: LeanML/Robustness/Equilibrium.lean =====
+
+===== INÍCIO DO ARQUIVO: LeanML/Robustness/Margin.lean =====
+module
+public import Mathlib.Topology.MetricSpace.Lipschitz
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.Positivity
+@[expose] public section
+open scoped NNReal
+namespace LeanML.Robustness
+variable {X C : Type*} [PseudoMetricSpace X]
+
+/-- Strict winning scores avoid ambiguity from ties in an argmax. -/
+def StrictWinner (scores : X → C → ℝ) (x : X) (winner : C) : Prop :=
+  ∀ competitor, competitor ≠ winner → scores x competitor < scores x winner
+
+/-- Pairwise decision margins survive perturbations smaller than their Lipschitz budget. -/
+theorem margin_stable (scores : X → C → ℝ) (K : ℝ≥0)
+    (hLip : ∀ i, LipschitzWith K (fun x => scores x i)) (x y : X) (a b : C)
+    (hm : 2*(K:ℝ)*dist y x < scores x a-scores x b) : scores y b < scores y a := by
+  have ha := abs_le.mp (show |scores y a-scores x a| ≤ (K:ℝ)*dist y x by
+    simpa only [Real.dist_eq] using (hLip a).dist_le_mul y x)
+  have hb := abs_le.mp (show |scores y b-scores x b| ≤ (K:ℝ)*dist y x by
+    simpa only [Real.dist_eq] using (hLip b).dist_le_mul y x)
+  linarith
+
+/-- The usual certified radius, with the indispensable positive Lipschitz constant. -/
+theorem certified_radius (scores : X → C → ℝ) (K : ℝ≥0)
+    (hLip : ∀ i, LipschitzWith K (fun x => scores x i)) (x y : X) (a b : C)
+    (hK : 0 < (K:ℝ)) (r : ℝ) (hr : r < (scores x a-scores x b)/(2*(K:ℝ)))
+    (hy : dist y x ≤ r) : scores y b < scores y a := by
+  apply margin_stable scores K hLip x y a b
+  have hm := (lt_div_iff₀ (show 0 < 2*(K:ℝ) by positivity)).mp hr
+  have hd := mul_le_mul_of_nonneg_left hy (show 0 ≤ 2*(K:ℝ) by positivity)
+  nlinarith
+
+/-- Multiclass robustness requires a positive margin against EVERY competing class. -/
+theorem strictWinner_stable (scores : X → C → ℝ) (K : ℝ≥0)
+    (hLip : ∀ i, LipschitzWith K (fun x => scores x i)) (x y : X) (winner : C)
+    (margin : ℝ) (hmargin : ∀ j, j ≠ winner → margin ≤ scores x winner-scores x j)
+    (hbudget : 2*(K:ℝ)*dist y x < margin) : StrictWinner scores y winner := by
+  intro j hj
+  exact margin_stable scores K hLip x y winner j (hbudget.trans_le (hmargin j hj))
+
+omit [PseudoMetricSpace X] in
+/-- A classifier that actually selects a maximum must return the unique strict winner. -/
+theorem classifier_eq_of_strictWinner (scores : X → C → ℝ) (classify : X → C)
+    (hmax : ∀ z i, scores z i ≤ scores z (classify z)) (y : X) (c : C)
+    (hc : StrictWinner scores y c) : classify y = c := by
+  by_contra h
+  exact (not_lt_of_ge (hmax y c)) (hc (classify y) h)
+end LeanML.Robustness
+===== FIM DO ARQUIVO: LeanML/Robustness/Margin.lean =====
+
+===== INÍCIO DO ARQUIVO: LeanML/Robustness/Quantization.lean =====
+module
+public import Mathlib.Analysis.Normed.Operator.Basic
+public import Mathlib.Analysis.InnerProductSpace.PiL2
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.Positivity
+public import Mathlib.Tactic.NormNum
+@[expose] public section
+open scoped NNReal
+noncomputable section
+namespace LeanML.Robustness
+variable {E F : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
+  [NormedAddCommGroup F] [NormedSpace ℝ F]
+
+/-- Operator-norm weight error gives an input-uniform output error bound. -/
+theorem quantization_error (W Q : E →L[ℝ] F) (x : E) (Δ B : ℝ)
+    (hΔ : ‖W-Q‖ ≤ Δ) (hB : ‖x‖ ≤ B) : ‖W x-Q x‖ ≤ Δ*B := by
+  have hnonneg : 0 ≤ Δ := (norm_nonneg (W-Q)).trans hΔ
+  calc
+    ‖W x-Q x‖ = ‖(W-Q) x‖ := by rw [sub_apply]
+    _ ≤ ‖W-Q‖*‖x‖ := (W-Q).le_opNorm x
+    _ ≤ Δ*B := mul_le_mul hΔ hB (norm_nonneg _) hnonneg
+
+/-- An activation multiplies quantization error by its Lipschitz constant. -/
+theorem activated_quantization_error (W Q : E →L[ℝ] F) (σ : F → F) (K : ℝ≥0)
+    (hσ : LipschitzWith K σ) (x : E) (Δ B : ℝ)
+    (hΔ : ‖W-Q‖ ≤ Δ) (hB : ‖x‖ ≤ B) :
+    ‖σ (W x)-σ (Q x)‖ ≤ (K:ℝ)*(Δ*B) := by
+  exact (show ‖σ (W x)-σ (Q x)‖ ≤ (K:ℝ)*‖W x-Q x‖ by
+    simpa only [dist_eq_norm] using hσ.dist_le_mul (W x) (Q x)).trans
+      (mul_le_mul_of_nonneg_left (quantization_error W Q x Δ B hΔ hB) K.coe_nonneg)
+
+/-- The square-root row factor is valid for a bound on EACH output coordinate. -/
+theorem euclidean_coordinate_bound {I : Type*} [Fintype I]
+    (e : EuclideanSpace ℝ I) (C : ℝ) (hC : 0 ≤ C) (he : ∀ i, |e i| ≤ C) :
+    ‖e‖ ≤ Real.sqrt (Fintype.card I)*C := by
+  have hs : ∀ i, (e i)^2 ≤ C^2 := by
+    intro i
+    have h := (sq_le_sq₀ (abs_nonneg (e i)) hC).mpr (he i)
+    simpa only [sq_abs] using h
+  apply (sq_le_sq₀ (norm_nonneg e) (mul_nonneg (Real.sqrt_nonneg _) hC)).mp
+  rw [mul_pow, Real.sq_sqrt (Nat.cast_nonneg _), EuclideanSpace.real_norm_sq_eq]
+  simpa using! Finset.sum_le_sum (fun i _ => hs i)
+
+/-- Row vectors of an entrywise matrix error in Euclidean coordinates. -/
+def matrixRowError {I J : Type*} [Fintype J] (W Q : I → J → ℝ) (i : I) : EuclideanSpace ℝ J :=
+  WithLp.toLp 2 (fun j => W i j-Q i j)
+
+def matrixOutputError {I J : Type*} [Fintype I] [Fintype J]
+    (W Q : I → J → ℝ) (x : EuclideanSpace ℝ J) : EuclideanSpace ℝ I :=
+  WithLp.toLp 2 (fun i => inner ℝ (matrixRowError W Q i) x)
+
+/-- Correct dimension dependence for a uniform PER-ENTRY weight error.
+The factor is sqrt(rows)*sqrt(columns)*Delta*B, not merely sqrt(rows)*Delta*B.
+-/
+theorem entrywise_quantization_bound {I J : Type*} [Fintype I] [Fintype J]
+    (W Q : I → J → ℝ) (x : EuclideanSpace ℝ J) (Δ B : ℝ)
+    (hΔ : 0 ≤ Δ) (hentry : ∀ i j, |W i j-Q i j| ≤ Δ) (hB : ‖x‖ ≤ B) :
+    ‖matrixOutputError W Q x‖ ≤ Real.sqrt (Fintype.card I)*(Real.sqrt (Fintype.card J)*Δ*B) := by
+  have hB0 := (norm_nonneg x).trans hB
+  apply euclidean_coordinate_bound _ _ (by positivity)
+  intro i
+  change |inner ℝ (matrixRowError W Q i) x| ≤ Real.sqrt (Fintype.card J)*Δ*B
+  have hrow : ‖matrixRowError W Q i‖ ≤ Real.sqrt (Fintype.card J)*Δ := by
+    apply euclidean_coordinate_bound _ Δ hΔ
+    intro j
+    exact hentry i j
+  exact (abs_real_inner_le_norm _ _).trans
+    (mul_le_mul hrow hB (norm_nonneg x) (by positivity))
+
+/-- A 1×2 row of unit coefficient errors shows why a column factor cannot be omitted. -/
+theorem entrywise_bound_needs_dimension : ¬ (2:ℝ) ≤ Real.sqrt 2 := by
+  intro h
+  nlinarith [Real.sq_sqrt (show (0:ℝ) ≤ 2 by norm_num), Real.sqrt_nonneg (2:ℝ)]
+end LeanML.Robustness
+===== FIM DO ARQUIVO: LeanML/Robustness/Quantization.lean =====
+
+===== INÍCIO DO ARQUIVO: LeanMLTest/Advanced.lean =====
+module
+public import LeanML
+@[expose] public section
+noncomputable section
+open LeanML.Information LeanML.Optimization LeanML.Robustness
+open LeanML.Reinforcement LeanML.Reliability LeanML.Generative
+
+-- A positive binary margin survives a nonzero perturbation.
+example : (0 : ℝ) < 3/4 := by
+  let scores : ℝ → Bool → ℝ := fun x c => if c then x else 0
+  have hlip : ∀ c, LipschitzWith 1 (fun x => scores x c) := by
+    intro c
+    cases c
+    · exact LipschitzWith.const' (0 : ℝ)
+    · exact LipschitzWith.id
+  have h := margin_stable scores 1 hlip 1 (3/4) true false (by
+    norm_num [scores, Real.dist_eq])
+  exact h
+
+-- A boundary crossing is possible without the strict perturbation budget.
+example : ¬ StrictWinner (fun x : ℝ => fun c : Bool => if c then x else 0) 0 true := by
+  intro h
+  have hn := h false (by decide)
+  norm_num at hn
+
+-- The DEQ theorem applies to an actual complete-space update.
+example (x : ℝ) : ∃! h, deqUpdate id (0 : ℝ →L[ℝ] ℝ) x h = h := by
+  apply deq_exists_unique id 0 x LipschitzWith.id
+  norm_num
+
+theorem quadraticPL : PolyakLojasiewicz (fun x : ℝ => x^2/2) (fun x => x) 1 0 where
+  constant_pos := by norm_num
+  lower_bound x := by positivity
+  dominance x := by
+    simp only [Real.norm_eq_abs, sq_abs]
+    nlinarith
+
+example (hf : IsLSmooth (fun x : ℝ => x^2/2) (fun x => x) 1) (x : ℝ) (k : ℕ) :
+    (gradientIterate (fun x : ℝ => x) 1 x k)^2/2 ≤ (1-(1:ℝ))^k*(x^2/2) := by
+  simpa using pl_gradientDescent_rate hf quadraticPL (by norm_num) x k
+
+-- A biased forecast of 3/4 when the observed frequency is 1/2 has Brier loss 5/16.
+example : groupedBrier (uniformDistribution : FiniteDistribution Unit) (fun _ => 3/4) (fun _ => 1/2) = 5/16 := by
+  norm_num [groupedBrier, uniformDistribution]
+
+-- Single-state discounted reward has value r/(1-1/2) = 2r.
+def oneStateMDP (r : ℝ) : FiniteMDP Unit Unit where
+  reward _ _ := r
+  transition _ _ := uniformDistribution
+  discount := 1/2
+  discount_lt_one := by norm_num
+
+example (r : ℝ) : bellman (oneStateMDP r) (fun _ => 2*r) = fun _ => 2*r := by
+  funext s
+  simp [bellman, actionValue, oneStateMDP, uniformDistribution]
+  ring
+
+-- For a point-mass prior the posterior mean is its sole center, regardless of noise.
+example (m x : ℝ) : posteriorMean (fun _ : Unit => 1) (fun _ => m) 1 x = m := by
+  simp [posteriorMean, mixtureDensity, gaussianComponent, Real.exp_ne_zero]
+
+-- Tweedie uses the derivative of the actual density and works away from its centers.
+example (m x : ℝ) :
+    posteriorMean (fun _ : Unit => 1) (fun _ => m) 1 x =
+      x + deriv (fun z => Real.log (mixtureDensity (fun _ : Unit => 1) (fun _ => m) 1 z)) x := by
+  simpa using tweedie_finiteGaussian (fun _ : Unit => 1) (fun _ => m) 1 x
+    (by norm_num) (by intro _; norm_num)
+
+-- A 1x2 matrix with entrywise error 1 produces dot product 2 on input (1,1).
+-- Thus an output bound sqrt(rows)*Delta*B would require the false 2 <= sqrt(2).
+example : ¬ (2 : ℝ) ≤ Real.sqrt 2 := entrywise_bound_needs_dimension
+===== FIM DO ARQUIVO: LeanMLTest/Advanced.lean =====
+
 ===== INÍCIO DO ARQUIVO: LeanMLTest/Axioms.lean =====
 module
 
@@ -1412,6 +2350,54 @@ set_option autoImplicit false
 #print axioms LeanML.Optimization.DifferentiableNode.reverse_fork
 #print axioms LeanML.LearningTheory.hoeffding_bounded_mean
 #print axioms LeanML.LearningTheory.extendedVCDimension_mono
+
+-- New robustness, optimization, probability and architecture results.
+#print axioms LeanML.GameTheory.minimax_saddle
+#print axioms LeanML.Generative.coupling_expectation_difference
+#print axioms LeanML.Generative.lipschitz_potential_le_cost
+#print axioms LeanML.Generative.lipschitz_potential_le_optimal
+#print axioms LeanML.Generative.mixtureDensity_pos
+#print axioms LeanML.Generative.mixtureDensity_hasDeriv
+#print axioms LeanML.Generative.mixtureLog_hasDeriv
+#print axioms LeanML.Generative.tweedie_finiteGaussian
+#print axioms LeanML.Information.information_inequality
+#print axioms LeanML.LearningTheory.azuma_hoeffding
+#print axioms LeanML.LearningTheory.chebyshev
+#print axioms LeanML.LearningTheory.changeOfMeasure
+#print axioms LeanML.LearningTheory.finiteKL_nonneg
+#print axioms LeanML.Optimization.adjoint_interpolant_pythagoras
+#print axioms LeanML.Optimization.adjoint_interpolant_minimum_norm
+#print axioms LeanML.Optimization.leastSquares_range_step
+#print axioms LeanML.Optimization.PolyakLojasiewicz.stationary_global
+#print axioms LeanML.Optimization.pl_gradientDescent_rate
+#print axioms LeanML.Privacy.PrivatePair.postprocess
+#print axioms LeanML.Privacy.DifferentiallyPrivate.postprocess
+#print axioms LeanML.Reinforcement.max_abs_sub_le
+#print axioms LeanML.Reinforcement.transition_nonexpansive
+#print axioms LeanML.Reinforcement.bellman_contracting
+#print axioms LeanML.Reinforcement.bellman_exists_unique
+#print axioms LeanML.Reinforcement.valueIteration_converges
+#print axioms LeanML.Reliability.brier_decomposition
+#print axioms LeanML.Representation.deepSet_permute
+#print axioms LeanML.Representation.groupConvolution_equivariant
+#print axioms LeanML.Representation.equivariant_linear_is_convolution
+#print axioms LeanML.Representation.featureKernel_symmetric
+#print axioms LeanML.Representation.featureKernel_quadratic
+#print axioms LeanML.Representation.finiteNTK_psd
+#print axioms LeanML.Robustness.network_lipschitz
+#print axioms LeanML.Robustness.perturbation_nonexpansive
+#print axioms LeanML.Robustness.deq_contracting
+#print axioms LeanML.Robustness.deq_exists_unique
+#print axioms LeanML.Robustness.deq_iterates_converge
+#print axioms LeanML.Robustness.margin_stable
+#print axioms LeanML.Robustness.certified_radius
+#print axioms LeanML.Robustness.strictWinner_stable
+#print axioms LeanML.Robustness.classifier_eq_of_strictWinner
+#print axioms LeanML.Robustness.quantization_error
+#print axioms LeanML.Robustness.activated_quantization_error
+#print axioms LeanML.Robustness.euclidean_coordinate_bound
+#print axioms LeanML.Robustness.entrywise_quantization_bound
+#print axioms LeanML.Robustness.entrywise_bound_needs_dimension
 ===== FIM DO ARQUIVO: LeanMLTest/Axioms.lean =====
 
 ===== INÍCIO DO ARQUIVO: LeanMLTest/Basic.lean =====
@@ -1483,64 +2469,62 @@ example (x : ℝ) (k : ℕ) (hk : 0 < k) :
 ===== INÍCIO DO ARQUIVO: README.md =====
 # LeanML
 
-Formalização axiomática de fundamentos do aprendizado de máquina em **Lean 4 / Mathlib**.
-O projeto ativo é uma biblioteca Lean. O projeto anterior foi preservado em
-[`legacy/`](legacy/ARCHIVE.md), com manifesto de hashes e cópia do histórico Git.
+Biblioteca de fundamentos matemáticos de aprendizado de máquina em **Lean 4 / Mathlib**.
+A entrada pública é [`LeanML.lean`](LeanML.lean). As provas são verificadas pelo kernel;
+nenhum teorema pendente é introduzido como axioma.
 
 ```sh
 source scripts/activate.sh
 lake exe cache get
-lake build
 bash scripts/check.sh
+python3 scripts/export_code.py
 ```
 
-Instale [elan](https://github.com/leanprover/elan) e inclua `~/.elan/bin` no `PATH`.
-O arquivo `lean-toolchain` seleciona o compilador. O commit do Mathlib e as
-revisões transitivas estão fixados em `lakefile.lean` e `lake-manifest.json`.
-A configuração atual usa Lean **v4.36.0-rc2**, compatível com o Mathlib consultado
-na migração. O v4.15.0 citado no roteiro não é compatível com esse Mathlib.
-Não atualizar a dependência flutuantemente é uma escolha de reprodutibilidade.
+Instale [elan](https://github.com/leanprover/elan) antes de executar esses comandos.
+O projeto fixa Lean **v4.36.0-rc2** e o commit do Mathlib em `lakefile.lean` e
+`lake-manifest.json`. O Lean 4.15 do roteiro inicial é incompatível com essa revisão.
+Para compilar as dependências a partir dos fontes, use `lake --no-cache build`.
+Para rematerializar dependências sem baixar automaticamente o cache, use
+`MATHLIB_NO_CACHE_ON_UPDATE=1 lake update`. O cache oficial requer `cache.mathlib.org`.
 
-Para compilar sem cache de rede, use `lake --no-cache build`.
-Para rematerializar dependências sem disparar o download automático do cache,
-use `MATHLIB_NO_CACHE_ON_UPDATE=1 lake update`. O cache oficial requer acesso a
-`cache.mathlib.org`; o compilador e as dependências usam também GitHub e seus
-hosts de download. A compilação a partir dos fontes é consideravelmente mais demorada.
+| Área | Resultados e interfaces |
+|---|---|
+| Informação | Entropia finita, KL de medidas, processamento de dados, desigualdade de informação |
+| Otimização | Suavidade com gradiente genuíno, descida, taxas convexas e PL, geometria de mínimos quadrados |
+| Aprendizagem | Risco, Hoeffding, Azuma-Hoeffding, Chebyshev, VC, Sauer-Shelah, mudança de medida variacional |
+| Representação | MLP, atenção equivariante, kernels finitos positivos, DeepSets invariantes, classificação de convoluções em grupos finitos |
+| Robustez | Produto de constantes Lipschitz, margem adversarial estrita, equilíbrio de DEQs, erro de quantização |
+| Generativos | Acoplamentos finitos, dualidade fraca de transporte, ELBO, Tweedie para misturas gaussianas escalares |
+| Reforço | Bellman para MDPs finitos descontados, unicidade e convergência de iteração de valor |
+| Privacidade | Preservação de privacidade diferencial por pós-processamento mensurável determinístico |
+| Confiabilidade | Decomposição finita de Brier em calibração, resolução e incerteza |
+| Jogos | Minimax de Sion na forma de ponto de sela, reutilizado do Mathlib |
 
-A entrada pública é [`LeanML.lean`](LeanML.lean), com cinco áreas:
+Há **40 módulos**, além da entrada e três arquivos de testes. O
+[inventário](docs/STATUS.md) identifica as provas completas, especializações e
+pendências dos 58 tópicos adicionais solicitados. Cybenko, NTK no limite infinito,
+PAC-Bayes de alta probabilidade e reversão de Anderson **ainda não estão provados**.
+Uma especificação em `Prop` não demonstra o teorema que descreve.
 
-| Pilar | Diretório | Conteúdo |
-|---|---|---|
-| Informação | `LeanML/Information/` | Entropia finita, KL de medidas e processamento de dados |
-| Otimização | `LeanML/Optimization/` | Gradientes, descida, taxas e regras de diferenciação |
-| Aprendizagem | `LeanML/LearningTheory/` | Riscos, concentração, VC, Sauer-Shelah e especificações PAC |
-| Representação | `LeanML/Representation/` | Ativações, redes dimensionadas, convolução e atenção |
-| Modelos generativos | `LeanML/Generative/` | Acoplamentos finitos, ELBO e interfaces de difusão |
+Os limites de robustez preservam decisões sob hipóteses explícitas de margem e
+Lipschitz. Eles não certificam a verdade semântica das respostas de um modelo.
+A cota de erro de quantização por entrada inclui os fatores de dimensão necessários.
 
-O [estado dos teoremas](docs/STATUS.md) distingue resultados demonstrados,
-resultados reutilizados do Mathlib e especificações ainda sem prova. A presença
-de um arquivo com o nome de um grande teorema não significa que ele já esteja
-formalizado. Nenhum resultado pendente é introduzido como axioma.
+O [relatório de validação](docs/VALIDATION.md) descreve os comandos e o alcance dos testes.
+As [regras de contribuição](CONTRIBUTING.md) exigem hipóteses explícitas e provas sem lacunas.
 
-A definição de suavidade inclui `HasGradientAt f (g x) x`: exigir apenas que um
-campo vetorial arbitrário seja Lipschitz não implica o lema da descida para `f`.
-As hipóteses de suporte, integrabilidade, positividade e mensurabilidade aparecem
-nos tipos das definições e dos teoremas correspondentes.
+O código Python/Rust e a documentação sem relação com LeanML foram retirados da
+árvore ativa. Permanecem recuperáveis no histórico Git; esta versão não depende deles.
 
-A migração passou no build, nos exemplos e na auditoria de 22 teoremas centrais;
-veja [docs/VALIDATION.md](docs/VALIDATION.md) para a evidência e o alcance.
-
-Veja [CONTRIBUTING.md](CONTRIBUTING.md) para os critérios de contribuição.
-
-O arquivo [exports/LeanML_codigo_completo.txt](exports/LeanML_codigo_completo.txt)
-reúne todas as fontes ativas, testes, scripts, configurações e documentação em
-texto UTF-8. Para regenerá-lo, execute `python3 scripts/export_code.py`.
+[Baixar todo o código em TXT](exports/LeanML_codigo_completo.txt).
+A exportação UTF-8 inclui fontes, testes, scripts, CI, configurações e documentação,
+com índice de tamanhos e hashes SHA-256. Não inclui dependências de terceiros ou binários.
 ===== FIM DO ARQUIVO: README.md =====
 
 ===== INÍCIO DO ARQUIVO: docs/STATUS.md =====
 # Inventário formal LeanML
 
-A estrutura tem os 22 módulos pedidos. A tabela descreve o conteúdo matemático
+A estrutura preserva os 22 módulos iniciais e acrescenta 18 módulos relacionados a LeanML. A tabela descreve o conteúdo matemático
 implementado; o build e os testes de axiomas devem passar para uma revisão ser
 considerada verificada. As limitações abaixo fazem parte do contrato público.
 
@@ -1555,7 +2539,7 @@ considerada verificada. As limitações abaixo fazem parte do contrato público.
 | `Optimization/Stochastic` | Operador SGD e condições de passos Robbins-Monro | Convergência estocástica, filtração e hipóteses de ruído |
 | `Optimization/Backpropagation` | Nós diferenciáveis tipados, composição, ramificação, pullback e acumulação reversa nas ramificações | Algoritmo reverso completo com compartilhamento de nós e scheduler de DAG |
 | `LearningTheory/Loss` | Riscos, excesso de risco do ERM e controle uniforme em classes finitas por união de eventos | Leis amostrais IID e existência mensurável de minimizadores |
-| `LearningTheory/Concentration` | Hoeffding subgaussiana, versão limitada centrada e cota da média amostral, via Mathlib | McDiarmid e especializações Markov/Chebyshev |
+| `LearningTheory/Concentration` | Hoeffding subgaussiana, versão limitada centrada e cota da média amostral, via Mathlib | McDiarmid e especialização Markov; Chebyshev está em Martingales |
 | `LearningTheory/PAC` | Especificação explícita de garantia PAC por lei amostral | Produto IID, quantificação distribution-free e equivalência PAC ↔ VC finita |
 | `LearningTheory/VCDimension` | Classes finitas via Mathlib, shattering de classes arbitrárias e dimensão estendida em ℕ∞ | Ponte entre as representações finita e geral |
 | `LearningTheory/SauerShelah` | Cota combinatória binomial em domínio finito, via Mathlib | Cota exponencial `(eN/d)^d` e crescimento em amostras de domínio infinito |
@@ -1582,17 +2566,109 @@ considerada verificada. As limitações abaixo fazem parte do contrato público.
 - A prova finita de ELBO requer massas variacionais e joint estritamente positivos.
 - A definição de aproximação uniforme não é uma demonstração de densidade.
 
-## Continuação
+## Inventário adicional: convenções
 
-A prioridade é ampliar resultados completos sem introduzir buracos: integrar a prova de generalização finita à lei amostral IID, ampliar a
-acumulação reversa a um scheduler de DAG com compartilhamento e só então estender a classes infinitas, aceleração, aproximação universal e difusões.
-Este repositório não alega prioridade histórica nem cobertura completa da teoria de ML.
+**Completo no domínio indicado** significa prova verificada, com todas as hipóteses
+no tipo. **Parcial** identifica lemas auxiliares ou um domínio menor: não significa
+a demonstração do teorema amplo solicitado. **Pendente** significa que o resultado
+não está formalizado nesta revisão. Reutilização de um teorema do Mathlib é atribuída
+explicitamente. Os identificadores A01–A43 seguem o anexo; C01–C15 seguem a mensagem.
+
+## Os 15 tópicos da mensagem
+
+| ID | Pedido | Estado e evidência |
+|---|---|---|
+| C01 | Lipschitz da composição | **Completo** para listas finitas de camadas certificadas; `Robustness/Composition`, `network_lipschitz`. Composição heterogênea por `LipschitzLayer.comp`. |
+| C02 | Esfera adversarial | **Completo** para escores Lipschitz, margem estrita contra todos os concorrentes e classificador que seleciona um máximo; `Robustness/Margin`. Não trata empates como decisões invariantes. |
+| C03 | Equilíbrio DEQ | **Completo** em espaço normado completo, ativação 1-Lipschitz e norma de W < 1; existência única e convergência de Picard em `Robustness/Equilibrium`, via Banach do Mathlib. |
+| C04 | McAllester PAC-Bayes | **Parcial**: mudança de medida variacional e Gibbs para distribuições finitas de suporte positivo em `LearningTheory/PACBayes`. Falta a cota probabilística uniforme nos posteriores sob amostragem IID, perda limitada e prior independente dos dados. |
+| C05 | Simetrização | **Pendente**: a complexidade empírica finita existe; falta a prova com amostra fantasma, sinais independentes e supremum mensurável. |
+| C06 | Dudley | **Pendente**: números de cobertura, processo subgaussiano, hipóteses de separabilidade e integral de entropia. |
+| C07 | Polyak–Łojasiewicz | **Completo**: estacionariedade implica ótimo e GD tem taxa linear em valor sem hipótese de convexidade; `Optimization/PolyakLojasiewicz`, com gradiente genuíno, L > 0 e 0 < μ ≤ L. |
+| C08 | NTK infinito | **Parcial**: kernels de features finitas são simétricos e positivos semidefinidos (`Representation/Kernels`). Falta convergência de redes aleatórias em largura, inicialização e regime de treinamento especificados. |
+| C09 | Viés de norma mínima | **Parcial**: decomposição pitagórica, minimalidade de interpolante na imagem do adjunto e preservação dessa imagem por GD (`Optimization/LeastSquares`). Falta convergência das iterações com passo admissível e distinção entre GD e SGD. |
+| C10 | Cybenko | **Pendente**: há especificação de aproximação uniforme, sem demonstração de densidade. Hahn–Banach sozinho não prova que uma ativação é discriminatória. |
+| C11 | Telgarsky | **Pendente**: construção triangular, contagem de oscilações e limite inferior para arquitetura rasa precisamente especificada. |
+| C12 | Universalidade Transformer | **Pendente**: atenção equivariante está demonstrada; densidade das pilhas de blocos exige arquitetura, domínio e norma de aproximação especificados. |
+| C13 | Kantorovich–Rubinstein | **Parcial**: toda função 1-Lipschitz dá limite inferior para qualquer acoplamento e para o custo ótimo finito (`Generative/TransportDuality`). Falta dualidade forte e caso compacto geral. |
+| C14 | Quantização | **Completo para os limites corrigidos**: norma de operador e erro por entrada, ativação Lipschitz e dependência de dimensão (`Robustness/Quantization`). O limite fornecido sem fator de colunas é falso para erro por entrada. Não há compilador FP32→INT4 ou certificado de um modelo concreto. |
+| C15 | Anderson | **Pendente**: as interfaces de leis/caminhos não provam existência de SDE, Fokker–Planck ou reversão temporal. |
+
+## Os 43 tópicos do anexo
+
+| ID | Pedido | Estado e evidência / obrigação restante |
+|---|---|---|
+| A01 | Limite inferior de Nesterov | **Pendente**: oráculo de primeira ordem, dimensão, família adversária e limite inferior. |
+| A02 | Subgradientes | **Pendente**: oráculo de subgradientes e convergência O(1/√k). |
+| A03 | FISTA | **Pendente**: operador proximal, aceleração e potencial telescópico. |
+| A04 | Escape de selas | **Pendente**: regularidade de Hessiana, perturbações e controle probabilístico. |
+| A05 | Kurdyka–Łojasiewicz | **Pendente**: propriedade KL e prova de convergência sob hipóteses analíticas. Não confundir com a condição PL já implementada. |
+| A06 | AMSGrad | **Pendente**: estado adaptativo e prova de regret/convergência sob hipóteses explícitas. |
+| A07 | Fenchel–Moreau / KKT | **Pendente**: conjugação, semicontinuidade, qualificação de restrições e dualidade. |
+| A08 | McDiarmid | **Pendente**: diferenças limitadas em produto independente. |
+| A09 | Bernstein | **Pendente**: controle por variância e limite uniforme dos incrementos. |
+| A10 | Azuma–Hoeffding | **Completo no domínio subgaussiano condicional do Mathlib**: `LearningTheory/Martingales.azuma_hoeffding`, com filtração, adaptação forte e hipóteses mensuráveis explícitas. Falta especialização de diferenças limitadas. |
+| A11 | Contração de Talagrand | **Pendente**: transformação Lipschitz de classes e sinais independentes. |
+| A12 | Massart | **Pendente**: desigualdade maximal para classe finita. |
+| A13 | Estabilidade uniforme | **Pendente**: algoritmo, amostras vizinhas e transferência para generalização. |
+| A14 | Double descent | **Pendente**: modelo probabilístico de design/ruído e regime de interpolação. Não é fenômeno universal para qualquer rede. |
+| A15 | Hornik Lp | **Pendente**: medida, integrabilidade e densidade Lp. |
+| A16 | Leshno | **Pendente**: classe de ativações e equivalência com não polinomialidade quase sempre. |
+| A17 | Largura mínima universal | **Pendente**: domínio, norma, dimensão e arquitetura. |
+| A18 | Mercer / RKHS | **Parcial**: Gram finita positiva demonstrada em `Representation/Kernels`; faltam construção RKHS e decomposição espectral de Mercer. |
+| A19 | Teorema do representador | **Pendente**: RKHS, funcional regularizado e existência de minimizador. |
+| A20 | Kolmogorov–Arnold | **Pendente**: representação contínua por superposições univariadas. |
+| A21 | Pinsker / Bretagnolle–Huber | **Pendente**: desigualdades entre variação total e KL. |
+| A22 | Fano | **Pendente**: entropia condicional e probabilidade de erro. |
+| A23 | Le Cam / Assouad | **Pendente**: redução de estimação a testes e separação de famílias. |
+| A24 | Cramér–Rao multivariado | **Parcial**: desigualdade de informação de Hilbert derivada de Cauchy–Schwarz (`Information/CramerRao`); faltam modelos estatísticos regulares, score centrado e limite matricial. |
+| A25 | DeepSets | **Parcial**: invariância de ρ(∑φ(x)) demonstrada em `Representation/DeepSets`. Falta o teorema de representação recíproca sob hipóteses de domínio/cardinalidade e dimensão latente. |
+| A26 | Limites WL de GNNs | **Pendente**: grafos, message passing e refinamento de Weisfeiler–Leman. |
+| A27 | Convolução equivariante | **Completo para grupos finitos e sinais reais escalares**: equivariância e prova recíproca de que todo operador linear equivariante é uma convolução em `Representation/GroupConvolution`. Faltam grupos infinitos e representações vetoriais gerais. |
+| A28 | Chentsov | **Pendente**: métricas monotônicas e embeddings de Markov, com dimensão e normalização. |
+| A29 | Brenier | **Pendente**: medidas com momentos, continuidade absoluta e existência/unicidade do mapa gradiente de potencial convexo. Convexidade estrita não é garantida em geral. |
+| A30 | Benamou–Brenier | **Pendente**: equação de continuidade e problema variacional dinâmico. |
+| A31 | Tweedie | **Completo para prior discreto finito escalar e ruído gaussiano de variância positiva**: positividade, derivada da densidade, derivada logarítmica e identidade em `Generative/Tweedie`. Falta versão vetorial e prior contínuo. |
+| A32 | Hyvärinen | **Pendente**: integração por partes, condições de fronteira e equivalência de objetivos. |
+| A33 | Flow matching | **Pendente**: fluxo de medidas, velocidade condicional e equação de continuidade. |
+| A34 | Contração de Bellman | **Completo para MDPs finitos descontados**: probabilidades normalizadas, norma sup, contração, ponto fixo único e convergência da iteração de valor (`Reinforcement/Bellman`). |
+| A35 | Q-learning | **Pendente**: exploração persistente, passos Robbins–Monro e convergência quase certa. |
+| A36 | Policy gradient | **Pendente**: trajetória, política diferenciável, ocupação e troca de derivada/integral. |
+| A37 | Performance difference | **Pendente**: políticas e ocupações; a fórmula com ocupação normalizada precisa do fator 1/(1−γ). |
+| A38 | Sion / von Neumann | **Completo na forma de ponto de sela em dois conjuntos compactos convexos não vazios**: `GameTheory/Minimax.minimax_saddle`, reutilizando Sion do Mathlib. Não implica convergência de treinamento de GANs não convexas. |
+| A39 | Composição avançada DP | **Pendente**: mecanismos adaptativos, transcritos e contabilização de privacidade. |
+| A40 | Pós-processamento DP | **Completo para pós-processamento determinístico mensurável**: medidas e mecanismos de probabilidade em `Privacy/Differential`; preserva (ε,δ). Falta generalização explícita a kernels aleatorizados. |
+| A41 | Predição conformal | **Pendente**: exchangeability, ranks com empates e cobertura marginal finita. |
+| A42 | Brier | **Completo como identidade algébrica finita agrupada**: `Reliability/Brier.brier_decomposition`. A interpretação estatística requer frequências em [0,1] e agrupamento por previsão; não é uma prova de calibração de um modelo treinado. |
+| A43 | Davis–Kahan | **Pendente**: operadores autoadjuntos, separação espectral e ângulo de subespaços. |
+
+## Correções matemáticas e limites
+
+- Para erro **por entrada** Δ em uma matriz com r linhas e c colunas e ‖x‖₂ ≤ B,
+  provamos `‖(W−Q)x‖₂ ≤ √r √c Δ B`. A expressão `√r Δ B` exige controle da
+  norma de cada linha, em vez do erro individual de cada entrada. Uma linha (1,1)
+  e entrada (1,1) dão saída 2, enquanto o limite incorreto seria √2.
+- Banach exige completude e contração do mapa inteiro; ‖W‖ < 1 sozinho não
+  controla uma ativação arbitrária.
+- PL não afirma que toda rede satisfaz PL. O teorema não transforma automaticamente
+  pontos estacionários de perdas arbitrárias em ótimos globais.
+- Um limite PAC-Bayes não é sempre não vacuoso. Ele exige probabilidades,
+  quantificadores e hipóteses de amostragem que não podem ser omitidos.
+- Equivariância não demonstra aproximação universal, e aproximação contínua em
+  compactos não significa execução de todo algoritmo computável.
+- Uma prova para SDE idealizada com score exato não certifica o treinamento ou a
+  distribuição final de um modelo de difusão concreto.
+- Nenhum destes resultados implica ausência de alucinações semânticas, segurança
+  global de aviões/dispositivos médicos ou economia garantida de inferência.
+
+Não há alegação de que os 58 tópicos estejam concluídos, nem de prioridade histórica.
 ===== FIM DO ARQUIVO: docs/STATUS.md =====
 
 ===== INÍCIO DO ARQUIVO: docs/VALIDATION.md =====
-# Validação da migração LeanML
+# Validação LeanML
 
-A árvore de trabalho da migração foi compilada e verificada localmente com:
+Verificação local da revisão com 40 módulos matemáticos e 44 arquivos Lean ativos
+(40 módulos, entrada pública e três arquivos de testes).
 
 - Lean `4.36.0-rc2`, commit `b35cb10cf2ced51a2fd1880cfdbf75c71ab7a35a`.
 - Mathlib `e58cf8d261d79b3803ed199b7afe8253fe6672f8`.
@@ -1600,50 +2676,56 @@ A árvore de trabalho da migração foi compilada e verificada localmente com:
 
 | Comando | Resultado observado |
 |---|---|
-| `lake --wfail build` | Biblioteca completa compilada, sem avisos |
-| `bash scripts/check.sh` | Build, exemplos e auditoria de axiomas aprovados |
-| `python3 scripts/check_proofs.py` | 25 arquivos Lean ativos sem lacunas ou novos axiomas |
-| `python3 scripts/verify_legacy.py` | 939 arquivos originais e links preservados conforme manifesto |
-| `python3 scripts/verify_legacy.py --sources-only` | 36 arquivos-fonte e de configuração originais preservados |
-| `git bundle verify legacy/HISTORY.bundle` | Histórico Git completo e bundle válido |
+| `LEAN_NUM_THREADS=4 lake --wfail --no-cache build` | Biblioteca completa compilada; avisos tratados como falhas |
+| `bash scripts/check.sh` | Build, exemplos básicos e avançados, inspeção de axiomas aprovados |
+| `python3 scripts/check_proofs.py` | 44 arquivos Lean sem lacunas ou novos axiomas |
 | `git diff --check` | Sem erros de whitespace |
-
-A biblioteca contém os 22 módulos do roteiro mais a entrada `LeanML.lean`.
-Os dois arquivos de teste completam os 25 arquivos Lean ativos.
+| `python3 scripts/export_code.py` | TXT UTF-8 com fontes ativas e índice de hashes |
 
 ## Exemplos verificados
 
-`LeanMLTest/Basic.lean` verifica entropia de uma moeda equilibrada, normalização
-de softmax, permutação de atenção, translação de convolução, ramos da ReLU,
-o gradiente de uma perda quadrática, diminuição da perda e a taxa de GD.
-Um teste negativo demonstra que o campo identicamente zero não é o gradiente
-da função identidade: a antiga condição de suavidade insuficiente é rejeitada.
+`LeanMLTest/Basic.lean`: moeda equilibrada, normalização de softmax, permutação de
+atenção, translação de convolução, ReLU, gradiente quadrático genuíno, diminuição
+de perda e taxa convexa de GD. O teste negativo rejeita a antiga definição de
+suavidade que admitia campo nulo como gradiente da função identidade.
 
-## Axiomas
+`LeanMLTest/Advanced.lean`: margem binária com perturbação não nula, rejeição de
+empate como vencedor estrito, equilíbrio DEQ, condição PL quadrática e taxa de GD,
+Brier de previsão enviesada, valor de MDP de um estado descontado, posterior de
+prior pontual gaussiano e identidade de Tweedie com derivada real da log-densidade.
+O exemplo de quantização rejeita o limite com dependência de dimensão incompleta.
 
-`LeanMLTest/Axioms.lean` inspeciona 22 resultados centrais, incluindo o lema da
-descida, as taxas de GD, atenção matricial, entropia máxima, KL, processamento
-de dados, Hoeffding, Sauer-Shelah, ELBO e acumulação reversa.
-Todos reportaram somente:
+## Auditoria de axiomas
+
+`LeanMLTest/Axioms.lean` inspeciona 68 resultados: 22 anteriores e todos os 46
+teoremas dos 18 módulos adicionados. Cada resultado reportou somente os axiomas
+lógicos usuais:
 
 ```text
 [propext, Classical.choice, Quot.sound]
 ```
 
-O verificador rejeita `sorryAx`, `Lean.ofReduceBool` e `Lean.trustCompiler`
-na saída dessa auditoria. As provas-fonte ativas também são verificadas contra
-lacunas, novos axiomas e `native_decide` antes de compilar.
+O script rejeita `sorryAx`, `Lean.ofReduceBool` e `Lean.trustCompiler` na saída.
+A inspeção textual prévia rejeita lacunas, novos axiomas e `native_decide` nas fontes.
+Os testes Lean também tratam avisos como erros. O log da auditoria fica em
+`.lake/leanml-axioms.log` após executar o script.
 
-## Alcance
+## Alcance e reprodução
 
-Esta validação refere-se à árvore local da migração. A execução do workflow no
-GitHub só será conhecida depois de ele ser disparado. A compilação de uma
-especificação em `Prop` não demonstra a propriedade que ela define; consulte
-`STATUS.md` para os grandes teoremas que continuam pendentes.
+A validação é local; uma execução futura de GitHub Actions precisa ser observada
+separadamente. Compilar uma propriedade em `Prop` não prova essa propriedade.
+Consulte [STATUS.md](STATUS.md) para os teoremas de pesquisa ainda pendentes.
 
-O cache oficial do Mathlib estava bloqueado pela rede do ambiente, então as
-dependências foram compiladas a partir dos fontes. A instalação de elan e do
-compilador usou os artefatos oficiais do GitHub com TLS habilitado.
+O cache oficial estava bloqueado pela rede deste ambiente. As dependências foram
+compiladas a partir dos fontes; não se usou artefato não verificado para substituir
+uma prova. A primeira compilação sem cache pode exceder o timeout do CI.
+
+O código histórico alheio a LeanML foi removido da árvore ativa. É recuperável pelo
+commit anterior `faae94e77de16235319cc00524387701b124f405`. Antes da remoção, uma cópia
+integral externa foi verificada arquivo a arquivo (977 arquivos regulares, além de
+links). Arquivo local: `/workspace/archives/MLib_legacy_faae94e.tar.gz`.
+SHA-256: `d51a2ef1cf945c0a032e7a41f13f7db57cbfada5a062b58207e769844a6e8e9c`.
+Essa cópia não é uma dependência de build nem integra a exportação do código ativo.
 ===== FIM DO ARQUIVO: docs/VALIDATION.md =====
 
 ===== INÍCIO DO ARQUIVO: lake-manifest.json =====
@@ -1785,11 +2867,11 @@ fi
 set -euo pipefail
 cd "$(dirname "$0")/.."
 source scripts/activate.sh
-python3 scripts/verify_legacy.py --sources-only
 python3 scripts/check_proofs.py
-lake build
-lake env lean LeanMLTest/Basic.lean
-lake env lean LeanMLTest/Axioms.lean > .lake/leanml-axioms.log
+lake --wfail build
+lake env lean -DwarningAsError=true LeanMLTest/Basic.lean
+lake env lean -DwarningAsError=true LeanMLTest/Advanced.lean
+lake env lean -DwarningAsError=true LeanMLTest/Axioms.lean > .lake/leanml-axioms.log
 if rg -q 'sorryAx|Lean.ofReduceBool|Lean.trustCompiler' .lake/leanml-axioms.log; then
   cat .lake/leanml-axioms.log
   exit 1
@@ -1900,7 +2982,7 @@ def render(root):
         'LeanML — código-fonte e configuração concatenados (UTF-8)\n',
         'Este arquivo reúne o código textual; não é um executável nem um artefato binário.\n',
         'Inclui fontes ativos, testes, scripts, CI, configurações e documentação.\n',
-        'O histórico em legacy/ e as dependências do Mathlib não integram esta exportação.\n',
+        'O código histórico removido e as dependências do Mathlib não integram esta exportação.\n',
         'A evidência de compilação está em docs/VALIDATION.md e o escopo em docs/STATUS.md.\n\n',
         f'ARQUIVOS: {len(files)}\n\nÍNDICE (caminho | bytes | SHA-256)\n',
     ]
@@ -1932,50 +3014,3 @@ def main():
 if __name__ == '__main__':
     main()
 ===== FIM DO ARQUIVO: scripts/export_code.py =====
-
-===== INÍCIO DO ARQUIVO: scripts/verify_legacy.py =====
-#!/usr/bin/env python3
-"""Verify preservation of the pre-migration files retained in the local archive.
-Generated files may be absent in a fresh Git clone because they are ignored.
-"""
-from pathlib import Path
-import argparse
-import hashlib
-import json
-import os
-
-
-def main():
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--sources-only', action='store_true', help='Allow omitted archived generated artifacts')
-    args = parser.parse_args()
-    root = Path(__file__).resolve().parent.parent/'legacy'
-    manifest = json.loads((root/'ARCHIVE_MANIFEST.json').read_text())
-    generated = {'.venv', '__pycache__', 'build', 'ml_mathlib.egg-info', '.lake'}
-    checked = 0
-    for name, expected in manifest['files'].items():
-        path = root/name
-        if args.sources_only and Path(name).parts[0] in generated:
-            continue
-        actual = hashlib.sha256(path.read_bytes()).hexdigest()
-        if actual != expected:
-            raise SystemExit(f'Archive content differs: {name}')
-        checked += 1
-    for name, expected in manifest['symlinks'].items():
-        if args.sources_only and Path(name).parts[0] in generated:
-            continue
-        if os.readlink(root/name) != expected:
-            raise SystemExit(f'Archive symlink differs: {name}')
-    print(f'Archive verified: {checked} files; original source content preserved.')
-    upstream = root/'UPSTREAM_ARCHIVE_MANIFEST.json'
-    if upstream.exists():
-        additional = json.loads(upstream.read_text())
-        for name, expected in additional['files'].items():
-            if hashlib.sha256((root/name).read_bytes()).hexdigest() != expected:
-                raise SystemExit(f'Upstream archive content differs: {name}')
-        print(f'Upstream archive verified: {len(additional["files"])} additional files.')
-
-
-if __name__ == '__main__':
-    main()
-===== FIM DO ARQUIVO: scripts/verify_legacy.py =====

@@ -1,33 +1,29 @@
-# MLib — ML-MATHLIB 0.3
+# MLib — ML-MATHLIB 0.4
 
-Biblioteca experimental de **álgebra exata, geometria, dinâmica e aprendizado simbólico** em Python puro, organizada em seis estratos matemáticos. **Sem dependências de PyTorch, NumPy ou SymPy.**
+Biblioteca de álgebra, geometria da informação, dinâmica hamiltoniana e descoberta simbólica em **Python puro**. Não depende de PyTorch, NumPy, SymPy ou SciPy para executar.
 
-## Executar
+## Começar
 
 ```bash
 python ml_mathlib.py --test-all
-python ml_mathlib.py --test
-python -m unittest discover -p 'test_ml_mathlib*.py' -v
 python ml_mathlib.py --demo
 python replay_certificate.py examples/central_force_conservation.json
 ```
 
-**70 testes locais passaram**: 13 do núcleo, 24 da versão 0.2, 33 da versão 0.3. Os componentes operam com aritmética exata quando declarado; transcendentes e integrações podem usar intervalos racionais certificados ou aproximações explicitamente sinalizadas.
+A suíte de regressão executada localmente em Python 3.13.5 passou com **104/104 testes**. O comando `--test-all` reúne núcleo 0.1, extensões 0.2/0.3 e novas verificações 0.4.
 
-## Componentes
+## Arquivos
 
-| Arquivo | Função |
-|---|---|
-| [`ml_mathlib.py`](ml_mathlib.py) | Núcleo e interface de importação da biblioteca |
-| [`ml_mathlib_advanced.py`](ml_mathlib_advanced.py) | Expansão 0.2: Gröbner, frações, informações de Fisher, contato, Noether, atenção |
-| [`ml_mathlib_exact.py`](ml_mathlib_exact.py) | Expansão 0.3: CRT, corpos algébricos, intervalos, ponto médio certificado, SU(2), curvatura, atenção diferenciável, Casimirs |
-| [`test_ml_mathlib_advanced.py`](test_ml_mathlib_advanced.py) | Testes da 0.2 |
-| [`test_ml_mathlib_exact.py`](test_ml_mathlib_exact.py) | Testes da 0.3 |
-| [`README_MLIB_0_3.md`](README_MLIB_0_3.md) | Derivações, exemplos e hipóteses matemáticas |
-| [`CHECKLIST_25_0_3.md`](CHECKLIST_25_0_3.md) | Auditoria dos 25 itens e suas restrições |
-| [`examples/central_force_conservation.json`](examples/central_force_conservation.json) | Certificado de conservação portátil que pode ser reexecutado |
-| [`lean/CentralForceConservation.lean`](lean/CentralForceConservation.lean) | Obrigação Lean gerada: **não compilada nem certificada pelo Lean 4** |
+- [Núcleo canônico e APIs](ml_mathlib.py)
+- [Extensões 0.2](ml_mathlib_advanced.py)
+- [Extensões exatas 0.3](ml_mathlib_exact.py)
+- [Extensões verificáveis 0.4](ml_mathlib_verified.py)
+- [Testes de todas as versões](test_ml_mathlib_verified.py)
+- [Guia técnico 0.4](README_MLIB_0_4.md)
+- [Auditoria detalhada dos 25 problemas](CHECKLIST_25_0_4.md)
 
-## Precisão sobre o escopo
+O resultado não é equivalente à Mathlib do Lean. **8/25 frentes** têm soluções completas em domínios expressamente delimitados e **17/25 permanecem parciais**. A complexidade combinatória e a necessidade de um verificador de provas externo impedem alegar conclusão plena.
 
-**Não é uma Mathlib completa.** Uma identidade polinomial validada em Python não equivale a um teorema verificado por Lean; uma classe de corpo de números algébricos não resolve automaticamente qualquer decomposição espectral; um cálculo local em atlas não prova a topologia de variedades gerais. O inventário atualizado é **5/25 atendidos em domínios restritos e 20/25 parciais**, não 25/25 esgotados. Consulte o [checklist](CHECKLIST_25_0_3.md) para evidências.
+## Cuidados de rigor
+
+Identidades no domínio racional/polinomial são calculadas e verificadas exatamente. Logaritmos, trigonometria arbitrária e distribuições contínuas mais gerais exigem intervalos certificados ou hipóteses adicionais. A prova exportada a Lean ainda **não foi compilada e verificada** pelo kernel Lean.

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""ML-MATHLIB 0.3 — núcleo matemático executável, sem dependências externas.
+"""ML-MATHLIB 0.4 — núcleo matemático executável, sem dependências externas.
 
 Hierarquia e contratos:
   [0] ℚ-espaços vetoriais, produtos internos, dualidade e operadores lineares.
@@ -1141,12 +1141,12 @@ def main():
     parser = argparse.ArgumentParser(description="ML-MATHLIB: álgebra e invariantes exatos")
     parser.add_argument("--test", action="store_true", help="Executa a suíte de axiomas e certificados")
     parser.add_argument("--demo", action="store_true", help="Executa a prova de fogo de Noether")
-    parser.add_argument("--test-all", action="store_true", help="Executa regressões 0.1 + extensões 0.2 e 0.3")
+    parser.add_argument("--test-all", action="store_true", help="Executa regressões 0.1 + extensões 0.2, 0.3 e 0.4")
     args = parser.parse_args()
     if args.test or args.test_all:
         suite = unittest.defaultTestLoader.loadTestsFromTestCase(AxiomaticTests)
         if args.test_all:
-            for module in ("test_ml_mathlib_advanced", "test_ml_mathlib_exact"):
+            for module in ("test_ml_mathlib_advanced", "test_ml_mathlib_exact", "test_ml_mathlib_verified"):
                 suite.addTests(unittest.defaultTestLoader.loadTestsFromName(module))
         result = unittest.TextTestRunner(verbosity=2).run(suite)
         if not result.wasSuccessful():
@@ -1185,7 +1185,20 @@ _EXACT_NAMES = frozenset({
 })
 
 
+_VERIFIED_NAMES = frozenset({
+    "poly_exact_quotient", "multivariate_gcd", "ReducedRational",
+    "RationalDifferentialForm", "rational_determinant", "rational_substitution",
+    "IdealMembershipCertificate", "groebner_witness",
+    "GaussianPolynomialLaw", "GaussianMixturePolynomialLaw",
+    "CategoricalInformationGeometry", "RationalRotationSO2", "IntervalSoftmax",
+    "DampedHarmonicMidpoint", "SparseBlockKernel",
+    "ExactQuadraticMidpoint", "OrnsteinUhlenbeckMoments",
+})
+
 def __getattr__(name):
+    if name in _VERIFIED_NAMES:
+        import ml_mathlib_verified
+        return getattr(ml_mathlib_verified, name)
     if name in _EXACT_NAMES:
         import ml_mathlib_exact
         return getattr(ml_mathlib_exact, name)

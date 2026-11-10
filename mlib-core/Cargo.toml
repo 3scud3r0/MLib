@@ -1,0 +1,30 @@
+[package]
+name = "mlib-core"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.80"
+description = "Small exact certificate-checking kernel for Hamiltonian geometry"
+license = "MIT"
+
+[lib]
+name = "mlib_core"
+crate-type = ["rlib", "cdylib"]
+
+[dependencies]
+num-bigint = "0.4"
+num-rational = "0.4"
+num-traits = "0.2"
+num-integer = "0.1"
+blake3 = "1.5"
+hex = "0.4"
+thiserror = "1.0"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+pyo3 = { version = "0.23", features = ["extension-module"], optional = true }
+
+[features]
+default = []
+python = ["pyo3"]
+
+[dev-dependencies]
+serde_json = "1.0"

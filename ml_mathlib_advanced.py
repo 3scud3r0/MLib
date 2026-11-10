@@ -267,6 +267,7 @@ def ideal_contains(candidate: Polynomial, basis: Sequence[Polynomial]) -> bool:
 
 @dataclass(frozen=True)
 class RationalFunction:
+    __hash__ = None  # Igualdade algébrica por multiplicação cruzada; representação não canônica.
     """Elemento de Frac(Q[x]); denominador não nulo como polinômio.
 
     Redução por MDC implementada no caso univariado. Em dimensão >1 a
@@ -1012,5 +1013,5 @@ def export_lean_conservation(f:Polynomial,h:Polynomial,phase:SymplecticSpace,
                      ' - '+lean_polynomial(f.diff(phase.pairs+i),vars)+' * '+lean_polynomial(h.diff(i),vars)+')')
     expr='('+' + '.join(terms)+')'
     return ('import Mathlib\n\n'
-            f'theorem {theorem_name} ('+' '.join(f'({x} : ℚ)' for x in vars)+
-            f') : {expr} = 0 := by\n  ring\n')
+            f'theorem {theorem_name} '+' '.join(f'({x} : ℚ)' for x in vars)+
+            f' : {expr} = 0 := by\n  ring\n')

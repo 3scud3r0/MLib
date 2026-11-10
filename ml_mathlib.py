@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""ML-MATHLIB 0.2 — núcleo matemático executável, sem dependências externas.
+"""ML-MATHLIB 0.3 — núcleo matemático executável, sem dependências externas.
 
 Hierarquia e contratos:
   [0] ℚ-espaços vetoriais, produtos internos, dualidade e operadores lineares.
@@ -1141,13 +1141,17 @@ def main():
     parser = argparse.ArgumentParser(description="ML-MATHLIB: álgebra e invariantes exatos")
     parser.add_argument("--test", action="store_true", help="Executa a suíte de axiomas e certificados")
     parser.add_argument("--demo", action="store_true", help="Executa a prova de fogo de Noether")
+    parser.add_argument("--test-all", action="store_true", help="Executa regressões 0.1 + extensões 0.2 e 0.3")
     args = parser.parse_args()
-    if args.test:
+    if args.test or args.test_all:
         suite = unittest.defaultTestLoader.loadTestsFromTestCase(AxiomaticTests)
+        if args.test_all:
+            for module in ("test_ml_mathlib_advanced", "test_ml_mathlib_exact"):
+                suite.addTests(unittest.defaultTestLoader.loadTestsFromName(module))
         result = unittest.TextTestRunner(verbosity=2).run(suite)
         if not result.wasSuccessful():
             raise SystemExit(1)
-    if args.demo or not args.test:
+    if args.demo or not (args.test or args.test_all):
         demo()
 
 
@@ -1165,7 +1169,26 @@ _ADVANCED_NAMES = frozenset({
 })
 
 
+_EXACT_NAMES = frozenset({
+    "crt_pair", "crt_many", "modular_determinant", "primitive_integer_kernel",
+    "irreducible_mod_prime", "NumberField", "AlgebraicElement", "ExactYoshida4",
+    "interval_sqrt", "interval_power", "interval_eval", "interval_exp_global",
+    "interval_log_global", "interval_sin_cos_global", "interval_arccos_unit",
+    "MidpointContractionCertificate", "MixedTensor", "rational_matrix_inverse",
+    "RationalRiemannianMetric", "SU2", "RationalLieAlgebra",
+    "StereographicSphere2", "SymbolicAttention", "SymbolicMultiHeadAttention",
+    "PolynomialItoDiffusion", "polynomial_kernel", "discover_casimirs",
+    "reduced_groebner_basis", "QuadraticAlgebraicFunction", "AnalyticExpression",
+    "SparseExactKernel", "UniformIntervalMeasure", "CertifiedFisherSphere",
+    "GaussianNaturalExponentialFamily", "CertifiedGaussianFisher",
+    "serialize_conservation_certificate", "verify_conservation_certificate",
+})
+
+
 def __getattr__(name):
+    if name in _EXACT_NAMES:
+        import ml_mathlib_exact
+        return getattr(ml_mathlib_exact, name)
     if name in _ADVANCED_NAMES:
         import ml_mathlib_advanced
         return getattr(ml_mathlib_advanced, name)

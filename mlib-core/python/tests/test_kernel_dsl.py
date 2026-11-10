@@ -5,8 +5,8 @@ import json
 from fractions import Fraction
 import unittest
 
-from mlib_kernel import Expr, Kernel, PhaseSpace
-from mlib_nabla_bridge import CandidateSyntaxError, DiscoverySession, parse_candidate
+from mlib_core import Expr, Kernel, PhaseSpace
+from mlib_core import CandidateSyntaxError, DiscoverySession, parse_candidate
 
 
 class DslTests(unittest.TestCase):
@@ -124,7 +124,7 @@ class ProposerTests(unittest.TestCase):
 
 
 try:
-    import mlib_core  # noqa: F401
+    from mlib_core._mlib_core import MlibKernelContext  # noqa: F401
 except ImportError:
     NATIVE_INSTALLED = False
 else:

@@ -40,7 +40,7 @@ python -m pip install dist/*.whl
 
 ```python
 from fractions import Fraction
-from mlib_kernel import PhaseSpace, Kernel
+from mlib_core import PhaseSpace, Kernel
 
 phase = PhaseSpace(1)
 q, p = phase.coordinates()  # Ordem: q0, p0
@@ -61,8 +61,8 @@ Para coeficientes exatos não inteiros: `Fraction(1, 7) * q`. O Python rejeita `
 ## 4. Descoberta com propostas do modelo
 
 ```python
-from mlib_kernel import PhaseSpace, Kernel
-from mlib_nabla_bridge import DiscoverySession
+from mlib_core import PhaseSpace, Kernel
+from mlib_core import DiscoverySession
 
 phase = PhaseSpace(1)
 q, p = phase.coordinates()
@@ -120,7 +120,7 @@ O kernel **não** é um Lean completo e `CertifiedTheorem` não é um certificad
 ## 8. GCD acelerado por candidato não confiável (mas verificado)
 
 ```python
-from mlib_kernel import PhaseSpace, Kernel
+from mlib_core import PhaseSpace, Kernel
 phase = PhaseSpace(1)
 q, p = phase.coordinates()
 factor = q + p

@@ -14,8 +14,7 @@ from __future__ import annotations
 import argparse
 import json
 
-from mlib_kernel import Kernel, PhaseSpace
-from mlib_nabla_bridge import DiscoverySession, NablaCheckpointSampler
+from mlib_core import Kernel, PhaseSpace, DiscoverySession, NablaCheckpointSampler
 
 
 def main() -> None:

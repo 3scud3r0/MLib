@@ -72,4 +72,4 @@ Sem tipos dependentes gerais, física em variedades arbitrárias, integrais tran
 
 ## Integração Python / NABLA-GPT (revisão 0.2)
 
-Consulte [`../README_MLIB_KERNEL_INTEGRATION.md`](../README_MLIB_KERNEL_INTEGRATION.md) para a sintaxe de `PhaseSpace`, `Kernel`, `DiscoverySession`, a execução com checkpoint seguro e os limites dos caminhos rápidos de MDC.
+Consulte [`../README_MLIB_KERNEL_INTEGRATION.md`](../README_MLIB_KERNEL_INTEGRATION.md) para a API instalada `from mlib_core import PhaseSpace, Kernel, DiscoverySession`, a execução com checkpoint seguro e os limites dos caminhos rápidos de MDC.

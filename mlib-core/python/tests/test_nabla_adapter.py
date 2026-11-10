@@ -6,7 +6,7 @@ from types import ModuleType, SimpleNamespace
 from unittest import TestCase
 from unittest.mock import patch
 
-from mlib_nabla_bridge import NablaCheckpointSampler
+from mlib_core import NablaCheckpointSampler
 
 
 class _FakeModel:

@@ -22,6 +22,8 @@ jobs:
           toolchain: ${{ matrix.rust }}
       - name: Test trusted kernel without Python
         run: cargo test --manifest-path mlib-core/Cargo.toml --all-targets --no-default-features
+      - name: Audit compile-fail proof constructor (Rust doctests)
+        run: cargo test --manifest-path mlib-core/Cargo.toml --doc --no-default-features
       - name: Test optional PyO3 feature
         run: cargo test --manifest-path mlib-core/Cargo.toml --all-targets --features python
       - name: Static Python DSL tests (without Rust module installed)

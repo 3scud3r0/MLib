@@ -168,6 +168,19 @@ class NativeEndToEndTests(unittest.TestCase):
         cert = Kernel().verify_conservation(s, hamiltonian=p**2, candidate=(q/q) * p**2)
         self.assertTrue(cert.original_domain_exclusions)
 
+    def test_certificate_constructor_is_not_available_in_python(self):
+        from mlib_core import PyCertifiedTheorem
+        with self.assertRaises(TypeError):
+            PyCertifiedTheorem()
+
+    def test_certificate_digest_is_stable_across_contexts(self):
+        s = PhaseSpace(1)
+        q, p = s.coordinates()
+        h = p**2 / 2 + q**4 / 4
+        first = Kernel().verify_conservation(s, hamiltonian=h, candidate=h)
+        second = Kernel().verify_conservation(s, hamiltonian=h, candidate=h)
+        self.assertEqual(first.digest, second.digest)
+
     def test_polynomial_gcd_hint_exact(self):
         s = PhaseSpace(1)
         q, p = s.coordinates()

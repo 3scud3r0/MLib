@@ -113,7 +113,7 @@ A interpolação modular esparsa de Zippel e sua reconstrução certificada **n�
 
 A suíte Python testa a gramática contra chamadas, atributos, `eval`, expressões perigosas, floats, mistura de espaços, tamanho e profundidade excessivos, regressões e a ligação real com PyO3 **quando instalada**. Os testes Rust cobrem os atalhos matemáticos exatos e a preservação do domínio original.
 
-O GitHub Actions compila e testa Rust sem Python e com PyO3, constrói a wheel, importa a extensão e roda o exemplo completo. Testes com GPU não estão previstos no CI CPU.
+O GitHub Actions compila e testa Rust sem Python e com PyO3, executa os doctests `compile_fail` para o construtor privado de teoremas, constrói a wheel, importa a extensão e roda o exemplo completo. Testes com GPU não estão previstos no CI CPU.
 
 O kernel **não** é um Lean completo e `CertifiedTheorem` não é um certificado universalmente transferível sem reexecução de suas condições matemáticas. Um PR verde significa compilação e testes do escopo declarado — não prova formal da implementação Rust inteira.
 

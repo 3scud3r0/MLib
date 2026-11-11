@@ -1,0 +1,11 @@
+{
+  "schema": "godel-leanml-rewrite-v2",
+  "statement_blake3": "36b0299bb855d98119b6cfe1f107fb2f661e264dbfdb7f6e4e0b248ae551f782",
+  "proof_blake3": "cff8db0fee3c001e1a8f424b3afe0a77a8fb3b947a32c7a94bafe7322031a77b",
+  "evidence": "ASTv2|1|fold(3,x0,(a0+i0))|(x0+3)|21|5|2ed44392a37f4c893989396fc2b15ad202216dab8666a6d678e190263d128cf5",
+  "cpp_verified": true,
+  "lean_status": "kernel-verified",
+  "lean_file": "examples/godel/Rewrite_36b0299bb855d98119b6cfe1f107fb2f661e264dbfdb7f6e4e0b248ae551f782.lean",
+  "lean_source_sha256": "862215a1ec95b432080de70d01e134cb1eccca6580ffbd76157ccf7f897775c5",
+  "lean_toolchain": "leanprover/lean4:v4.36.0-rc2"
+}

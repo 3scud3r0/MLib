@@ -53,7 +53,8 @@ def code_only(source):
 def main():
     root = Path(__file__).resolve().parent.parent
     files = [root/'LeanML.lean', *sorted((root/'LeanML').rglob('*.lean')),
-             *sorted((root/'LeanMLTest').rglob('*.lean'))]
+             *sorted((root/'LeanMLTest').rglob('*.lean')),
+             *sorted((root/'examples/godel').rglob('*.lean'))]
     violations = []
     for path in files:
         code = code_only(path.read_text())

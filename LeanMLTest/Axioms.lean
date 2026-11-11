@@ -75,3 +75,6 @@ set_option autoImplicit false
 #print axioms LeanML.Robustness.euclidean_coordinate_bound
 #print axioms LeanML.Robustness.entrywise_quantization_bound
 #print axioms LeanML.Robustness.entrywise_bound_needs_dimension
+
+#print axioms LeanML.Programs.boundedLoop_zero
+#print axioms LeanML.Programs.VerifiedRewrite.trans

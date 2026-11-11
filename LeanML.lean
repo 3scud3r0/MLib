@@ -25,6 +25,7 @@ public import LeanML.Optimization.Nesterov
 public import LeanML.Optimization.PolyakLojasiewicz
 public import LeanML.Optimization.Smoothness
 public import LeanML.Optimization.Stochastic
+public import LeanML.Programs.VerifiedRewrite
 public import LeanML.Privacy.Differential
 public import LeanML.Reinforcement.Bellman
 public import LeanML.Reliability.Brier

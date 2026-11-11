@@ -29,9 +29,10 @@ Para rematerializar dependências sem baixar automaticamente o cache, use
 | Reforço | Bellman para MDPs finitos descontados, unicidade e convergência de iteração de valor |
 | Privacidade | Preservação de privacidade diferencial por pós-processamento mensurável determinístico |
 | Confiabilidade | Decomposição finita de Brier em calibração, resolução e incerteza |
+| Programas | DSL tipado, semântica de loops/tensores e certificados de reescrita |
 | Jogos | Minimax de Sion na forma de ponto de sela, reutilizado do Mathlib |
 
-Há **40 módulos**, além da entrada e três arquivos de testes. O
+Há **41 módulos**, além da entrada e três arquivos de testes. O
 [inventário](docs/STATUS.md) identifica as provas completas, especializações e
 pendências dos 58 tópicos adicionais solicitados. Cybenko, NTK no limite infinito,
 PAC-Bayes de alta probabilidade e reversão de Anderson **ainda não estão provados**.
@@ -50,3 +51,9 @@ O código Python/Rust e a documentação sem relação com LeanML foram retirado
 [Baixar todo o código em TXT](exports/LeanML_codigo_completo.txt).
 A exportação UTF-8 inclui fontes, testes, scripts, CI, configurações e documentação,
 com índice de tamanhos e hashes SHA-256. Não inclui dependências de terceiros ou binários.
+
+A ferramenta [Godel](docs/GODEL.md) integra o C++ anexado ao LeanML: AST com
+condicionais, loops limitados e tensores racionais; propostas locais ou por memória
+compartilhada POSIX; exportação automática de teoremas `.lean`. Execute
+`bash scripts/check_godel.sh` para compilar o C++ e verificar o ciclo completo.
+A aprovação C++ é distinta do status `kernel-verified`, atribuído somente após Lean.

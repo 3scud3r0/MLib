@@ -1,6 +1,6 @@
 # Inventário formal LeanML
 
-A estrutura preserva os 22 módulos iniciais e acrescenta 18 módulos relacionados a LeanML. A tabela descreve o conteúdo matemático
+A estrutura preserva os 22 módulos iniciais e acrescenta 19 módulos relacionados a LeanML. A tabela descreve o conteúdo matemático
 implementado; o build e os testes de axiomas devem passar para uma revisão ser
 considerada verificada. As limitações abaixo fazem parte do contrato público.
 
@@ -138,3 +138,17 @@ explicitamente. Os identificadores A01–A43 seguem o anexo; C01–C15 seguem a 
   global de aviões/dispositivos médicos ou economia garantida de inferência.
 
 Não há alegação de que os 58 tópicos estejam concluídos, nem de prioridade histórica.
+
+
+## Integração de busca C++ com LeanML
+
+`Programs/VerifiedRewrite` define AST tipado (`Term`), denotação, loops limitados,
+tensores finitos, custo estrutural e `VerifiedRewrite`. O teorema de composição de
+reescritas preserva equivalência e melhoria estrita de custo.
+
+`tools/godel` implementa o AST racional/tensorial, condições `iflt`, folds com
+escopo léxico, normalização simbólica conservadora, GNN opcional e propostas IPC.
+O exportador gera termos Lean que preservam loops e condicionais; a prova compara
+as denotações e recomputa os custos do AST. A reconstrução das evidências BLAKE3,
+a verificação do kernel e os limites estão documentados em [GODEL.md](GODEL.md).
+Esta integração não demonstra os grandes teoremas ainda pendentes nas tabelas acima.

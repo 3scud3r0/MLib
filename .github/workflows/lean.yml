@@ -19,3 +19,7 @@ jobs:
         run: lake exe cache get
       - name: Build and kernel-check LeanML
         run: bash scripts/check.sh
+      - name: Install exact C++ arithmetic dependencies
+        run: sudo apt-get update && sudo apt-get install -y g++ libgmp-dev
+      - name: Test Godel DSL, shared-memory proposals and generated Lean proofs
+        run: bash scripts/check_godel.sh

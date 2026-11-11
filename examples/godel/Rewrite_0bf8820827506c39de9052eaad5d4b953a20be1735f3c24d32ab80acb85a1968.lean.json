@@ -1,0 +1,11 @@
+{
+  "schema": "godel-leanml-rewrite-v2",
+  "statement_blake3": "0bf8820827506c39de9052eaad5d4b953a20be1735f3c24d32ab80acb85a1968",
+  "proof_blake3": "2066a175d79e74c7e8ab17fda5ed605568a1e88dbbba92499dacb9da33af6d02",
+  "evidence": "ASTv2|2|fold(2,tensor([2],[x0,x1]),(a0+tensor([2],[1,i0])))|tensor([2],[(x0+2),(x1+1)])|21|11|aaea06b2f7ca7a1fb73636642a773121f4d1f7f46de75538f87920ddd32da62f",
+  "cpp_verified": true,
+  "lean_status": "kernel-verified",
+  "lean_file": "examples/godel/Rewrite_0bf8820827506c39de9052eaad5d4b953a20be1735f3c24d32ab80acb85a1968.lean",
+  "lean_source_sha256": "318681b829b0359f0d5a946861559e360c2d668a98ef59464e6801d0b674c9a0",
+  "lean_toolchain": "leanprover/lean4:v4.36.0-rc2"
+}

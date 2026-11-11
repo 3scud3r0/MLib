@@ -14,6 +14,8 @@ def source_files(root):
         ('LeanML', {'.lean'}), ('LeanMLTest', {'.lean'}),
         ('scripts', {'.py', '.sh'}), ('.github/workflows', {'.yml', '.yaml'}),
         ('docs', {'.md'}),
+        ('tools/godel', {'.cpp', '.hpp', '.py'}), ('tests/godel', {'.cpp', '.py'}),
+        ('examples/godel', {'.lean', '.json'}),
     ):
         files.extend(path for path in (root/directory).rglob('*')
                      if path.is_file() and path.suffix in extensions)
